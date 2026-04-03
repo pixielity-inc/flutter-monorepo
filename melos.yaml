@@ -57,10 +57,17 @@ scripts:
       flutter pub run build_runner build --delete-conflicting-outputs
     description: Run code generation (freezed, json_serializable) for all packages.
 
-  # Clean build artifacts across all packages in parallel.
+ # Clean all build artifacts and pub cache for a workspace.
   clean:
     run: melos exec --parallel --concurrency=4 -- flutter clean
-    description: Clean build artifacts for all packages.
+    description: Remove build artifacts from all packages (alias for the clean script above).
+
+  # Deep clean — removes build artifacts AND the pub cache.
+  clean:all:
+    run: |
+      melos exec --parallel --concurrency=4 -- flutter clean
+      dart pub cache clean --force
+    description: Remove build artifacts and clear the global pub cache.
 
   # Apply dart fix suggestions across all packages.
   fix:
@@ -86,15 +93,3 @@ scripts:
   outdated:
     run: melos exec --parallel --concurrency=4 -- flutter pub outdated
     description: List outdated packages in all workspaces.
-
-  # Clean all build artifacts and pub cache for a workspace.
-  clean:
-    run: melos exec --parallel --concurrency=4 -- flutter clean
-    description: Remove build artifacts from all packages (alias for the clean script above).
-
-  # Deep clean — removes build artifacts AND the pub cache.
-  clean:all:
-    run: |
-      melos exec --parallel --concurrency=4 -- flutter clean
-      dart pub cache clean --force
-    description: Remove build artifacts and clear the global pub cache.
