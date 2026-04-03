@@ -1,0 +1,45 @@
+# analysis_options.yaml (root)
+#
+# Shared lint configuration for the entire monorepo.
+# All packages inherit from this file by including:
+#
+#   include: ../../analysis_options.yaml
+#
+# We use `very_good_analysis` as the base ruleset, which enforces strict,
+# production-grade Dart/Flutter linting standards.
+#
+# Docs: https://pub.dev/packages/very_good_analysis
+
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  # Treat these as errors rather than warnings to enforce clean code.
+  errors:
+    missing_required_param: error
+    missing_return: error
+    dead_code: warning
+
+  # Exclude generated files from analysis — they are auto-produced by
+  # build_runner and do not need to conform to lint rules.
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/generated/**"
+
+linter:
+  rules:
+    # Require docblocks on all public APIs.
+    public_member_api_docs: true
+
+    # Prefer single quotes for string literals.
+    prefer_single_quotes: true
+
+    # Avoid print() in production code — use a logger instead.
+    avoid_print: true
+
+    # Require const constructors where possible for performance.
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+
+    # Enforce trailing commas for better diffs and formatting.
+    require_trailing_commas: true

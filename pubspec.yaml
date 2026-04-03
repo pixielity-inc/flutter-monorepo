@@ -1,0 +1,111 @@
+# Root pubspec.yaml
+#
+# This is the workspace-level pubspec for the Flutter monorepo.
+# It serves two purposes:
+#   1. Declares the Dart pub workspace (Dart SDK >= 3.5 feature)
+#   2. Hosts the Melos v7 configuration (scripts, IDE settings)
+#   3. Provides deps for the Dart CLI tool in tool/
+#
+# Melos v7 no longer uses melos.yaml — all config lives here under `melos:`.
+# See: https://melos.invertase.dev/guides/migrations
+
+name: flutter_monorepo_root
+description: Root workspace for the Flutter monorepo. Hosts the Dart CLI tool.
+version: 1.0.0
+
+environment:
+  # Dart SDK >= 3.11 is required for glob patterns in pub workspaces.
+  sdk: ">=3.11.0 <4.0.0"
+
+# ---------------------------------------------------------------------------
+# Pub workspace declaration (Dart SDK feature)
+# ---------------------------------------------------------------------------
+# Glob patterns — any directory matching these patterns that contains a
+# pubspec.yaml with `resolution: workspace` is automatically included.
+# No need to list each app/package individually; just drop a new one in
+# apps/ or packages/ and run `dart pub get` at the root.
+workspace:
+  - apps/*
+  - packages/*
+
+# ---------------------------------------------------------------------------
+# Dependencies used by the Dart CLI in tool/
+# ---------------------------------------------------------------------------
+dependencies:
+  # Argument parsing for the Dart CLI (tool/cli.dart).
+  args: ^2.4.2
+
+dev_dependencies:
+  # Melos is a dev dependency so the workspace always uses the pinned version.
+  melos: ^7.5.0
+
+# ---------------------------------------------------------------------------
+# Melos v7 configuration
+# ---------------------------------------------------------------------------
+# In Melos v7, all configuration that was previously in melos.yaml now lives
+# here under the `melos:` key.
+melos:
+  # IDE integration — generates IntelliJ run configurations.
+  ide:
+    intellij: true
+
+  # ---------------------------------------------------------------------------
+  # Versioning & publishing
+  # ---------------------------------------------------------------------------
+  # Melos uses Conventional Commits to determine version bumps automatically.
+  # Run `melos version` to bump versions and update CHANGELOGs.
+  # Run `melos publish` to publish all changed packages to pub.dev.
+  #
+  # Commit message convention:
+  #   feat:     → minor bump (0.x.0)
+  #   fix:      → patch bump (0.0.x)
+  #   feat!:    → major bump (x.0.0)  (breaking change)
+  #   chore/docs/refactor/test → no version bump
+  command:
+    version:
+      # Automatically update CHANGELOG.md in each package on version bump.
+      updateGitTagRefs: true
+      # Commit message used for the version bump commit.
+      message: "chore(release): publish packages\n\n{new_package_versions}"
+      # Branch that versioning commits are pushed to.
+      branch: main
+
+    publish:
+      # Dry-run by default — pass --no-dry-run to actually publish.
+      # This prevents accidental publishes.
+      dryRun: true
+
+  # ---------------------------------------------------------------------------
+  # Scripts callable via `melos run <name>` or the Dart CLI.
+  # ---------------------------------------------------------------------------
+  scripts:
+
+    # Analyze all packages in parallel (read-only, safe to parallelize).
+    lint:
+      run: melos exec -c 4 -- flutter analyze
+      description: Analyze all packages for lint and type errors.
+
+    # Format all Dart files in parallel.
+    format:
+      run: melos exec -c 4 -- dart format .
+      description: Format all Dart source files.
+
+    # Run all tests in parallel (isolated per package).
+    test:
+      run: melos exec -c 4 -- flutter test
+      description: Run unit and widget tests for all packages.
+
+    # Code generation must run sequentially to avoid build_runner conflicts.
+    gen:
+      run: melos exec -- flutter pub run build_runner build --delete-conflicting-outputs
+      description: Run code generation (freezed, json_serializable) for all packages.
+
+    # Clean build artifacts in parallel.
+    clean:
+      run: melos exec -c 4 -- flutter clean
+      description: Clean build artifacts for all packages.
+
+    # Apply dart fix suggestions in parallel.
+    fix:
+      run: melos exec -c 4 -- dart fix --apply
+      description: Apply automated fixes across all packages.

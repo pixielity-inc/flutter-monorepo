@@ -1,0 +1,100 @@
+# melos.yaml
+#
+# Melos is the monorepo orchestration tool for Flutter/Dart workspaces.
+# It manages package discovery, bootstrapping, and script execution across
+# all packages in the `apps/` and `packages/` directories.
+#
+# Docs: https://melos.invertase.dev
+
+name: flutter_monorepo
+
+# ---------------------------------------------------------------------------
+# Package discovery
+# ---------------------------------------------------------------------------
+# Melos will scan these glob patterns to find all Dart/Flutter packages.
+# Each matched directory must contain a pubspec.yaml.
+packages:
+  - apps/**
+  - packages/**
+
+# ---------------------------------------------------------------------------
+# IDE integration
+# ---------------------------------------------------------------------------
+ide:
+  intellij: true
+
+# ---------------------------------------------------------------------------
+# Scripts
+# ---------------------------------------------------------------------------
+# These scripts are called by the Dart CLI (tool/cli.dart).
+# Developers should use the CLI rather than calling melos scripts directly.
+scripts:
+
+  # Bootstrap all packages — resolves dependencies across the workspace.
+  bootstrap:
+    run: melos bootstrap
+    description: Install dependencies for all packages.
+
+  # Run flutter analyze across all packages in parallel.
+  lint:
+    run: melos exec --parallel --concurrency=4 -- flutter analyze
+    description: Analyze all packages for lint and type errors.
+
+  # Format all Dart files across all packages in parallel.
+  format:
+    run: melos exec --parallel --concurrency=4 -- dart format .
+    description: Format all Dart source files.
+
+  # Run all tests across all packages in parallel.
+  test:
+    run: melos exec --parallel --concurrency=4 -- flutter test
+    description: Run unit and widget tests for all packages.
+
+  # Run build_runner sequentially to avoid file conflicts.
+  gen:
+    run: >
+      melos exec --
+      flutter pub run build_runner build --delete-conflicting-outputs
+    description: Run code generation (freezed, json_serializable) for all packages.
+
+  # Clean build artifacts across all packages in parallel.
+  clean:
+    run: melos exec --parallel --concurrency=4 -- flutter clean
+    description: Clean build artifacts for all packages.
+
+  # Apply dart fix suggestions across all packages.
+  fix:
+    run: melos exec --parallel --concurrency=4 -- dart fix --apply
+    description: Apply automated fixes across all packages.
+
+  # Install git hooks — run once after cloning.
+  hooks:install:
+    run: git config core.hooksPath .githooks
+    description: Register .githooks as the git hooks directory for this repo.
+
+  # Upgrade all pub dependencies to latest versions.
+  upgrade:
+    run: melos exec --parallel --concurrency=4 -- flutter pub upgrade
+    description: Upgrade all packages to their latest allowed versions.
+
+  # Upgrade to latest versions ignoring constraints (use with care).
+  upgrade:major:
+    run: melos exec --parallel --concurrency=4 -- flutter pub upgrade --major-versions
+    description: Upgrade packages to latest major versions (may include breaking changes).
+
+  # Show outdated packages across all workspaces.
+  outdated:
+    run: melos exec --parallel --concurrency=4 -- flutter pub outdated
+    description: List outdated packages in all workspaces.
+
+  # Clean all build artifacts and pub cache for a workspace.
+  clean:
+    run: melos exec --parallel --concurrency=4 -- flutter clean
+    description: Remove build artifacts from all packages (alias for the clean script above).
+
+  # Deep clean — removes build artifacts AND the pub cache.
+  clean:all:
+    run: |
+      melos exec --parallel --concurrency=4 -- flutter clean
+      dart pub cache clean --force
+    description: Remove build artifacts and clear the global pub cache.
