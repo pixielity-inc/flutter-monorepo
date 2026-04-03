@@ -9,7 +9,7 @@
 # Melos v7 no longer uses melos.yaml — all config lives here under `melos:`.
 # See: https://melos.invertase.dev/guides/migrations
 
-name: flutter_monorepo_root
+name: pixielity_flutter_monorepo
 description: Root workspace for the Flutter monorepo. Hosts the Dart CLI tool.
 version: 1.0.0
 

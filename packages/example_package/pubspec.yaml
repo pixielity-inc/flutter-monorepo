@@ -9,7 +9,7 @@
 #
 # Other packages depend on this; it depends on nothing in the monorepo.
 
-name: example_package
+name: pixielity_core
 description: >
   Canonical example of a domain-layer package in the Flutter monorepo.
   Contains a model, repository interface, and use case as templates.

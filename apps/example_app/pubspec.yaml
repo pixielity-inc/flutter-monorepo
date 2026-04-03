@@ -8,7 +8,7 @@
 # It is intentionally minimal — one screen, one provider, one package dep.
 # Use it as the template when adding new apps to the monorepo.
 
-name: example_app
+name: pixielity_example_app
 description: >
   Example Flutter application demonstrating monorepo package consumption,
   Riverpod state management, and clean architecture wiring.
@@ -23,8 +23,8 @@ environment:
   flutter: ">=3.16.0"
 
 dependencies:
-  # example_package — domain entities, repository interface, use case.
-  example_package:
+  # pixielity_core — domain entities, repository interface, use case.
+  pixielity_core:
     path: ../../packages/example_package
 
   flutter:
