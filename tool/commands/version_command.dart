@@ -12,6 +12,7 @@
 ///   dart run tool/cli.dart version
 ///   dart run tool/cli.dart publish
 ///   dart run tool/cli.dart publish --no-dry-run
+library;
 
 import '../core/logger.dart';
 import '../core/runner.dart';

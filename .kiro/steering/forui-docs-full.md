@@ -1,3 +1,6 @@
+---
+inclusion: auto
+---
 # Getting Started
 
 Get started with Forui in your Flutter project.

@@ -9,6 +9,7 @@
 /// Usage:
 ///   dart run tool/cli.dart feature auth
 ///   dart run tool/cli.dart feature booking
+library;
 
 import 'dart:io';
 
@@ -105,7 +106,7 @@ Future<void> runFeature(String featureName) async {
   Logger.success('Feature "$featureName" scaffolded successfully.');
   Logger.dim('Next steps:');
   Logger.dim('  1. cd $basePath');
-  Logger.dim('  2. Add the package to your app\'s pubspec.yaml');
+  Logger.dim("  2. Add the package to your app's pubspec.yaml");
   Logger.dim('  3. Run: dart run tool/cli.dart gen');
 }
 

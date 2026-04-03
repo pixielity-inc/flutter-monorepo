@@ -9,6 +9,7 @@
 /// Usage:
 ///   dart run tool/cli.dart build
 ///   ./bin/cli build --app=my_app --target=apk
+library;
 
 import '../core/logger.dart';
 import '../core/runner.dart';

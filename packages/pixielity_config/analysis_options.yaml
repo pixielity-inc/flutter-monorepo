@@ -1,0 +1,5 @@
+# analysis_options.yaml (pixielity_config)
+#
+# Inherits all strict lint rules from the root analysis_options.yaml.
+
+include: ../../analysis_options.yaml

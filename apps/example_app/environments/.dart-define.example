@@ -1,0 +1,178 @@
+# ==============================================================================
+# Flutter Application — dart-define Configuration
+# ==============================================================================
+# This file documents every --dart-define key accepted by the app.
+# Copy this file to .dart-define.development, .dart-define.staging, or
+# .dart-define.production and fill in the values for each environment.
+#
+# Usage:
+#   flutter run  $(cat environments/.dart-define.development | grep -v '^#' | grep -v '^$' | sed 's/^/--dart-define=/' | tr '\n' ' ')
+#   flutter build apk $(cat environments/.dart-define.production | ...)
+#
+# NEVER commit .dart-define.development, .dart-define.staging, or
+# .dart-define.production to git — they may contain secrets.
+# Only .dart-define.example is tracked.
+# ==============================================================================
+
+
+# ==============================================================================
+# APPLICATION
+# ==============================================================================
+
+ENV=development
+APP_NAME=Pixielity
+APP_VERSION=1.0.0
+APP_BUILD_NUMBER=1
+
+# Supported: standard | free | pro | enterprise
+APP_FLAVOR=standard
+
+# Custom URL scheme for deep links: pixielity://
+APP_DEEP_LINK_SCHEME=pixielity
+
+# Sentry DSN for crash reporting. Leave empty to disable.
+APP_SENTRY_DSN=
+
+APP_SUPPORT_EMAIL=support@pixielity.com
+APP_PRIVACY_URL=https://pixielity.com/privacy
+APP_TERMS_URL=https://pixielity.com/terms
+
+
+# ==============================================================================
+# API
+# ==============================================================================
+
+API_BASE_URL=http://localhost:8080
+API_VERSION=v1
+
+# Timeouts in seconds
+API_CONNECT_TIMEOUT_S=10
+API_RECEIVE_TIMEOUT_S=30
+API_SEND_TIMEOUT_S=30
+
+# Retry policy
+API_MAX_RETRIES=3
+# Supported: none | fixed | exponential
+API_RETRY_BACKOFF=exponential
+API_RETRY_INITIAL_DELAY_MS=500
+API_RETRY_MAX_DELAY_MS=30000
+API_RETRY_STATUS_CODES=408,429,500,502,503,504
+
+# Security
+API_ENABLE_CERT_PINNING=false
+
+# Concurrency
+API_MAX_CONCURRENT=10
+
+# Proxy — leave empty to disable (Charles=8888, Proxyman=9090)
+API_PROXY_HOST=
+API_PROXY_PORT=0
+
+
+# ==============================================================================
+# AUTHENTICATION
+# ==============================================================================
+
+# Supported: jwt | oauth2 | apiKey | sessionCookie | none
+AUTH_STRATEGY=jwt
+
+# Token refresh threshold in seconds (refresh when this many seconds remain)
+AUTH_REFRESH_THRESHOLD_S=300
+AUTH_MAX_REFRESH_RETRIES=3
+
+# Session timeouts in seconds
+AUTH_SESSION_TIMEOUT_S=86400
+AUTH_INACTIVITY_TIMEOUT_S=1800
+
+AUTH_ENABLE_BIOMETRICS=false
+
+# API key header name (only used when AUTH_STRATEGY=apiKey)
+AUTH_API_KEY_HEADER=X-API-Key
+
+# OAuth2 / OIDC (only required when AUTH_STRATEGY=oauth2)
+AUTH_OAUTH2_CLIENT_ID=
+AUTH_OAUTH2_CLIENT_SECRET=
+AUTH_OAUTH2_AUTH_ENDPOINT=
+AUTH_OAUTH2_TOKEN_ENDPOINT=
+AUTH_OAUTH2_REDIRECT_URI=
+AUTH_OAUTH2_DISCOVERY_URL=
+AUTH_OAUTH2_SCOPES=openid,profile,email
+
+
+# ==============================================================================
+# THEME
+# ==============================================================================
+
+# Supported: neutral | zinc | slate | blue | green | orange | red | rose | violet | yellow
+THEME_BASE=violet
+
+# Supported: system | light | dark
+THEME_BRIGHTNESS=system
+
+# Leave empty to use Forui default (Inter)
+THEME_FONT_FAMILY=
+
+
+# ==============================================================================
+# STORAGE
+# ==============================================================================
+
+STORAGE_KEY_PREFIX=pixielity
+STORAGE_CACHE_MAX_MB=50
+STORAGE_CACHE_TTL_H=24
+STORAGE_DB_NAME=pixielity.db
+STORAGE_DB_VERSION=1
+
+
+# ==============================================================================
+# ANALYTICS
+# ==============================================================================
+
+ANALYTICS_ENABLED=false
+ANALYTICS_CRASH_ENABLED=false
+
+# Provider toggles
+ANALYTICS_FIREBASE=false
+ANALYTICS_MIXPANEL=false
+ANALYTICS_AMPLITUDE=false
+ANALYTICS_SEGMENT=false
+ANALYTICS_POSTHOG=false
+ANALYTICS_SENTRY=false
+ANALYTICS_CRASHLYTICS=false
+
+
+# ==============================================================================
+# LOGGING
+# ==============================================================================
+
+# Supported: verbose | debug | info | warning | error | fatal | none
+LOG_LEVEL=verbose
+
+LOG_ENABLE_FILE=false
+
+# Supported: pretty | compact | json
+LOG_FORMAT=pretty
+
+# Remote log transport — leave empty to disable
+LOG_REMOTE_ENDPOINT=
+LOG_REMOTE_API_KEY=
+
+
+# ==============================================================================
+# FEATURE FLAGS
+# ==============================================================================
+
+FLAG_NEW_ONBOARDING=false
+FLAG_AI_ASSISTANT=false
+FLAG_PREMIUM_THEMES=false
+FLAG_NEW_DASHBOARD=false
+FLAG_OFFLINE_MODE=false
+
+# Remote feature flag provider
+# Supported: none | launchDarkly | unleash | firebaseRemoteConfig | custom
+FLAGS_REMOTE_PROVIDER=none
+FLAGS_REMOTE_SDK_KEY=
+FLAGS_REMOTE_ENDPOINT=
+FLAGS_FETCH_INTERVAL_M=5
+FLAGS_FETCH_TIMEOUT_S=10
+FLAGS_ENABLE_STREAMING=false

@@ -1,0 +1,119 @@
+# ==============================================================================
+# Flutter — Staging Environment
+# ==============================================================================
+# Staging configuration — production-like but pointed at staging APIs.
+# Analytics enabled at 10% sampling. Info-level logging.
+#
+# Usage:
+#   flutter run $(cat environments/.dart-define.staging | grep -v '^#' | grep -v '^$' | sed 's/^/--dart-define=/' | tr '\n' ' ')
+# ==============================================================================
+
+
+# ==============================================================================
+# APPLICATION
+# ==============================================================================
+
+ENV=staging
+APP_NAME=Pixielity Staging
+APP_VERSION=0.0.1
+APP_BUILD_NUMBER=1
+APP_FLAVOR=standard
+APP_DEEP_LINK_SCHEME=pixielity-staging
+APP_SENTRY_DSN=
+APP_SUPPORT_EMAIL=support@pixielity.com
+APP_PRIVACY_URL=https://pixielity.com/privacy
+APP_TERMS_URL=https://pixielity.com/terms
+
+
+# ==============================================================================
+# API
+# ==============================================================================
+
+API_BASE_URL=https://staging-api.pixielity.com
+API_VERSION=v1
+API_CONNECT_TIMEOUT_S=10
+API_RECEIVE_TIMEOUT_S=30
+API_SEND_TIMEOUT_S=30
+API_MAX_RETRIES=3
+API_RETRY_BACKOFF=exponential
+API_RETRY_INITIAL_DELAY_MS=500
+API_RETRY_MAX_DELAY_MS=30000
+API_RETRY_STATUS_CODES=408,429,500,502,503,504
+API_ENABLE_CERT_PINNING=false
+API_MAX_CONCURRENT=10
+
+
+# ==============================================================================
+# AUTHENTICATION
+# ==============================================================================
+
+AUTH_STRATEGY=jwt
+AUTH_REFRESH_THRESHOLD_S=300
+AUTH_MAX_REFRESH_RETRIES=3
+AUTH_SESSION_TIMEOUT_S=86400
+AUTH_INACTIVITY_TIMEOUT_S=1800
+AUTH_ENABLE_BIOMETRICS=false
+AUTH_API_KEY_HEADER=X-API-Key
+
+
+# ==============================================================================
+# THEME
+# ==============================================================================
+
+THEME_BASE=violet
+THEME_BRIGHTNESS=system
+THEME_FONT_FAMILY=
+
+
+# ==============================================================================
+# STORAGE
+# ==============================================================================
+
+STORAGE_KEY_PREFIX=pixielity_staging
+STORAGE_CACHE_MAX_MB=50
+STORAGE_CACHE_TTL_H=24
+STORAGE_DB_NAME=pixielity_staging.db
+STORAGE_DB_VERSION=1
+
+
+# ==============================================================================
+# ANALYTICS
+# ==============================================================================
+
+ANALYTICS_ENABLED=true
+ANALYTICS_CRASH_ENABLED=true
+ANALYTICS_FIREBASE=false
+ANALYTICS_MIXPANEL=false
+ANALYTICS_AMPLITUDE=false
+ANALYTICS_SEGMENT=false
+ANALYTICS_POSTHOG=false
+ANALYTICS_SENTRY=true
+ANALYTICS_CRASHLYTICS=false
+
+
+# ==============================================================================
+# LOGGING
+# ==============================================================================
+
+LOG_LEVEL=info
+LOG_ENABLE_FILE=false
+LOG_FORMAT=compact
+LOG_REMOTE_ENDPOINT=
+LOG_REMOTE_API_KEY=
+
+
+# ==============================================================================
+# FEATURE FLAGS
+# ==============================================================================
+
+FLAG_NEW_ONBOARDING=true
+FLAG_AI_ASSISTANT=false
+FLAG_PREMIUM_THEMES=false
+FLAG_NEW_DASHBOARD=false
+FLAG_OFFLINE_MODE=false
+FLAGS_REMOTE_PROVIDER=none
+FLAGS_REMOTE_SDK_KEY=
+FLAGS_REMOTE_ENDPOINT=
+FLAGS_FETCH_INTERVAL_M=5
+FLAGS_FETCH_TIMEOUT_S=10
+FLAGS_ENABLE_STREAMING=false

@@ -9,6 +9,7 @@
 ///
 /// Usage:
 ///   dart run tool/cli.dart gen
+library;
 
 import '../core/logger.dart';
 import '../core/runner.dart';

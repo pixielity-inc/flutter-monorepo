@@ -1,0 +1,124 @@
+# ==============================================================================
+# Flutter — Development Environment
+# ==============================================================================
+# Local development configuration.
+# Points to localhost, verbose logging, all debug tools enabled,
+# all feature flags on for testing.
+#
+# Usage:
+#   flutter run $(cat environments/.dart-define.development | grep -v '^#' | grep -v '^$' | sed 's/^/--dart-define=/' | tr '\n' ' ')
+# ==============================================================================
+
+
+# ==============================================================================
+# APPLICATION
+# ==============================================================================
+
+ENV=development
+APP_NAME=Pixielity Dev
+APP_VERSION=0.0.1
+APP_BUILD_NUMBER=1
+APP_FLAVOR=standard
+APP_DEEP_LINK_SCHEME=pixielity-dev
+APP_SENTRY_DSN=
+APP_SUPPORT_EMAIL=dev@pixielity.com
+APP_PRIVACY_URL=https://pixielity.com/privacy
+APP_TERMS_URL=https://pixielity.com/terms
+
+
+# ==============================================================================
+# API
+# ==============================================================================
+
+API_BASE_URL=http://localhost:8081
+API_VERSION=v1
+API_CONNECT_TIMEOUT_S=15
+API_RECEIVE_TIMEOUT_S=60
+API_SEND_TIMEOUT_S=60
+API_MAX_RETRIES=1
+API_RETRY_BACKOFF=none
+API_RETRY_INITIAL_DELAY_MS=0
+API_RETRY_MAX_DELAY_MS=0
+API_RETRY_STATUS_CODES=408,429,500,502,503,504
+API_ENABLE_CERT_PINNING=false
+API_MAX_CONCURRENT=10
+
+# Uncomment to route through Charles (8888) or Proxyman (9090)
+# API_PROXY_HOST=localhost
+# API_PROXY_PORT=8888
+
+
+# ==============================================================================
+# AUTHENTICATION
+# ==============================================================================
+
+AUTH_STRATEGY=jwt
+AUTH_REFRESH_THRESHOLD_S=300
+AUTH_MAX_REFRESH_RETRIES=3
+AUTH_SESSION_TIMEOUT_S=28800
+AUTH_INACTIVITY_TIMEOUT_S=3600
+AUTH_ENABLE_BIOMETRICS=false
+AUTH_API_KEY_HEADER=X-API-Key
+
+
+# ==============================================================================
+# THEME
+# ==============================================================================
+
+THEME_BASE=violet
+THEME_BRIGHTNESS=system
+THEME_FONT_FAMILY=
+
+
+# ==============================================================================
+# STORAGE
+# ==============================================================================
+
+STORAGE_KEY_PREFIX=pixielity_dev
+STORAGE_CACHE_MAX_MB=20
+STORAGE_CACHE_TTL_H=1
+STORAGE_DB_NAME=pixielity_dev.db
+STORAGE_DB_VERSION=1
+
+
+# ==============================================================================
+# ANALYTICS
+# ==============================================================================
+
+ANALYTICS_ENABLED=false
+ANALYTICS_CRASH_ENABLED=false
+ANALYTICS_FIREBASE=false
+ANALYTICS_MIXPANEL=false
+ANALYTICS_AMPLITUDE=false
+ANALYTICS_SEGMENT=false
+ANALYTICS_POSTHOG=false
+ANALYTICS_SENTRY=false
+ANALYTICS_CRASHLYTICS=false
+
+
+# ==============================================================================
+# LOGGING
+# ==============================================================================
+
+LOG_LEVEL=verbose
+LOG_ENABLE_FILE=false
+LOG_FORMAT=pretty
+LOG_REMOTE_ENDPOINT=
+LOG_REMOTE_API_KEY=
+
+
+# ==============================================================================
+# FEATURE FLAGS
+# ==============================================================================
+
+FLAG_NEW_ONBOARDING=true
+FLAG_AI_ASSISTANT=true
+FLAG_PREMIUM_THEMES=true
+FLAG_NEW_DASHBOARD=true
+FLAG_OFFLINE_MODE=true
+FLAGS_REMOTE_PROVIDER=none
+FLAGS_REMOTE_SDK_KEY=
+FLAGS_REMOTE_ENDPOINT=
+FLAGS_FETCH_INTERVAL_M=5
+FLAGS_FETCH_TIMEOUT_S=10
+FLAGS_ENABLE_STREAMING=false

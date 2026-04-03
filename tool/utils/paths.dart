@@ -5,6 +5,7 @@
 /// All paths are resolved relative to the monorepo root, which is determined
 /// by locating the `melos.yaml` file. This makes the CLI work correctly
 /// regardless of which directory the user runs it from.
+library;
 
 import 'dart:io';
 

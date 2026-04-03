@@ -1,32 +1,44 @@
-import 'package:flutter/foundation.dart';
+// apps/example_app/lib/app.dart
+//
+// Application — root widget.
+//
+// Reads theme and app settings directly from Config.
+
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-
+import 'package:pixielity_config/pixielity_config.dart';
 import 'package:pixielity_example_app/pages/home_page.dart';
+import 'package:pixielity_ui/pixielity_ui.dart';
 
 /// Root application widget.
-///
-/// Sets up Forui theming with platform-aware touch/desktop variants,
-/// localization, and the [FToaster] + [FTooltipGroup] wrappers.
-class Application extends StatelessWidget {
-  /// Creates the root [Application] widget.
-  const Application({super.key});
+class AppWidget extends StatelessWidget {
+  /// Creates the root [AppWidget] widget.
+  const AppWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Use touch theme on mobile, desktop theme on desktop platforms.
-    final theme =
-        const <TargetPlatform>{
-          TargetPlatform.android,
-          TargetPlatform.iOS,
-          TargetPlatform.fuchsia,
-        }.contains(defaultTargetPlatform)
-        ? FThemes.neutral.dark.touch
-        : FThemes.neutral.dark.desktop;
+    // Read theme settings from the config registry.
+    final brightnessStrategy = Config.get<String>(
+      'theme.brightness',
+      fallback: 'system',
+    );
+    final platformBrightness =
+        WidgetsBinding.instance.platformDispatcher.platformBrightness;
+
+    final brightness = switch (brightnessStrategy) {
+      'light' => Brightness.light,
+      'dark' => Brightness.dark,
+      _ => platformBrightness, // 'system' — follow OS
+    };
+
+    final theme = AppTheme.fromConfig(brightness: brightness);
 
     return MaterialApp(
-      title: 'Pixielity Flutter Monorepo',
-      debugShowCheckedModeBanner: false,
+      title: Config.get<String>('app.name', fallback: 'Pixielity'),
+      debugShowCheckedModeBanner: Config.get<bool>(
+        'app.showDebugBanner',
+        fallback: false,
+      ),
       supportedLocales: FLocalizations.supportedLocales,
       localizationsDelegates: const [...FLocalizations.localizationsDelegates],
       theme: theme.toApproximateMaterialTheme(),

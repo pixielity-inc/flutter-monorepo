@@ -5,6 +5,7 @@
 /// Uses ANSI escape codes to colorize output. Colors are automatically
 /// disabled when stdout is not a terminal (e.g. CI environments) to keep
 /// log output clean and parseable.
+library;
 
 // ignore_for_file: avoid_print
 

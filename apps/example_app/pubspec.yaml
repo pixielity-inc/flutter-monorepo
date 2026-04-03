@@ -23,16 +23,31 @@ environment:
   flutter: ">=3.41.0"
 
 dependencies:
-  # pixielity_core — domain entities, repository interface, use case.
-  pixielity_core:
-    path: ../../packages/example_package
-
   flutter:
     sdk: flutter
 
   # flutter_riverpod provides the ProviderScope and consumer widgets.
   flutter_riverpod: ^2.4.10
   forui: ^0.20.4
+
+  # lucide_icons_flutter — full Lucide icon set (same icons as Forui, more coverage).
+  lucide_icons_flutter: ^3.1.12
+
+  # pixielity_config — centralised configuration system.
+  pixielity_config:
+    path: ../../packages/pixielity_config
+
+  # pixielity_container — Laravel-style IoC container.
+  pixielity_container:
+    path: ../../packages/pixielity_container
+
+  # pixielity_core — domain entities, repository interface, use case.
+  pixielity_core:
+    path: ../../packages/example_package
+
+  # pixielity_ui — centralised theming system and component library.
+  pixielity_ui:
+    path: ../../packages/pixielity_ui
 
 dev_dependencies:
   flutter_test:

@@ -10,6 +10,7 @@
 ///   dart run tool/cli.dart <command> [options]
 ///
 /// Run `dart run tool/cli.dart help` to see all available commands.
+library;
 
 import 'dart:io';
 

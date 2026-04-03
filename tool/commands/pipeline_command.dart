@@ -10,6 +10,7 @@
 ///   pipeline:ci       — gen → lint + test (parallel)
 ///   pipeline:dev      — gen → dev
 ///   pipeline:release  — gen → lint → test → build
+library;
 
 import '../core/logger.dart';
 import 'build_command.dart';

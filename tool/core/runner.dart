@@ -6,6 +6,7 @@
 /// This centralizes process management, error handling, and output streaming
 /// in one place — making it easy to add features like dry-run mode or
 /// command logging later.
+library;
 
 import 'dart:io';
 

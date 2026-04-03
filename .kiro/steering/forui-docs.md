@@ -1,3 +1,6 @@
+---
+inclusion: auto
+---
 # Forui
 
 > Beautiful, minimalistic, and platform-agnostic UI library for Flutter.

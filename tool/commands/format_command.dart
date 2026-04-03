@@ -7,6 +7,7 @@
 ///
 /// Usage:
 ///   dart run tool/cli.dart format
+library;
 
 import '../core/logger.dart';
 import '../core/runner.dart';

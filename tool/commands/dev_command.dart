@@ -8,6 +8,7 @@
 /// Usage:
 ///   dart run tool/cli.dart dev
 ///   ./bin/cli dev --app=my_app
+library;
 
 import '../core/logger.dart';
 import '../core/runner.dart';
