@@ -22,9 +22,7 @@ Future<void> runDev({String appName = 'example_app'}) async {
 
   // Run flutter run from the app directory so that the correct
   // pubspec.yaml and assets are picked up.
-  await ProcessRunner.run(
-    'flutter',
-    ['run'],
-    workingDirectory: WorkspacePaths.app(appName),
-  );
+  await ProcessRunner.run('flutter', [
+    'run',
+  ], workingDirectory: WorkspacePaths.app(appName));
 }

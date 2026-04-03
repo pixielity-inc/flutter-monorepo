@@ -23,7 +23,9 @@ import '../core/runner.dart';
 /// no generated code.
 Future<void> runGen() async {
   Logger.step('Running code generation...');
-  Logger.dim('Note: code generation runs sequentially to avoid file conflicts.');
+  Logger.dim(
+    'Note: code generation runs sequentially to avoid file conflicts.',
+  );
 
   await ProcessRunner.run('melos', [
     'exec',

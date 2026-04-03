@@ -15,9 +15,7 @@ final exampleRepositoryProvider = Provider<ExampleRepository>(
 
 /// Provides the [GetExampleItems] use case, injected with the repository.
 final getExampleItemsUseCaseProvider = Provider<GetExampleItems>(
-  (ref) => GetExampleItems(
-    repository: ref.watch(exampleRepositoryProvider),
-  ),
+  (ref) => GetExampleItems(repository: ref.watch(exampleRepositoryProvider)),
 );
 
 /// Async provider that executes [GetExampleItems] and exposes the result.

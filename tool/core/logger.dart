@@ -81,8 +81,7 @@ abstract final class Logger {
   /// Prints a gray dim message to stdout.
   ///
   /// Use for secondary output that should not distract from main messages.
-  static void dim(String message) =>
-      print(_colorize(_Ansi.gray, '  $message'));
+  static void dim(String message) => print(_colorize(_Ansi.gray, '  $message'));
 
   /// Prints an empty line for visual spacing.
   static void newline() => print('');

@@ -20,7 +20,8 @@ Future<void> runLint() async {
 
   await ProcessRunner.run('melos', [
     'exec',
-    '-c', '4',
+    '-c',
+    '4',
     '--',
     'flutter',
     'analyze',

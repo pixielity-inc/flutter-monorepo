@@ -74,10 +74,7 @@ Future<void> runFeature(String featureName) async {
   // ---------------------------------------------------------------------------
   // 2. Generate stub files
   // ---------------------------------------------------------------------------
-  await _writeFile(
-    '$basePath/pubspec.yaml',
-    _pubspecTemplate(featureName),
-  );
+  await _writeFile('$basePath/pubspec.yaml', _pubspecTemplate(featureName));
 
   await _writeFile(
     '$basePath/analysis_options.yaml',
@@ -124,7 +121,8 @@ Future<void> _writeFile(String path, String content) async {
 }
 
 /// Generates the `pubspec.yaml` for a new feature package.
-String _pubspecTemplate(String name) => '''
+String _pubspecTemplate(String name) =>
+    '''
 # packages/features/$name/pubspec.yaml
 #
 # Feature package: $name
@@ -272,5 +270,8 @@ final class Get${className}s {
 /// Example: `user_profile` → `UserProfile`
 String _toPascalCase(String input) => input
     .split('_')
-    .map((word) => word.isEmpty ? '' : '${word[0].toUpperCase()}${word.substring(1)}')
+    .map(
+      (word) =>
+          word.isEmpty ? '' : '${word[0].toUpperCase()}${word.substring(1)}',
+    )
     .join();

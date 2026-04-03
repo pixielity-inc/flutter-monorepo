@@ -81,10 +81,7 @@ class _ItemCard extends StatelessWidget {
             style: TextStyle(color: theme.colorScheme.onPrimaryContainer),
           ),
         ),
-        title: Text(
-          item.title,
-          style: theme.textTheme.titleMedium,
-        ),
+        title: Text(item.title, style: theme.textTheme.titleMedium),
         subtitle: item.description.isNotEmpty ? Text(item.description) : null,
       ),
     );
@@ -112,10 +109,7 @@ class _ErrorView extends StatelessWidget {
           const SizedBox(height: 16),
           Text('Something went wrong:\n$error', textAlign: TextAlign.center),
           const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: onRetry,
-            child: const Text('Retry'),
-          ),
+          ElevatedButton(onPressed: onRetry, child: const Text('Retry')),
         ],
       ),
     );

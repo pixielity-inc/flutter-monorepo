@@ -52,8 +52,10 @@ abstract final class ProcessRunner {
 
     if (exitCode != 0) {
       // Log the failure before exiting so the user knows which command failed.
-      Logger.error('Command failed with exit code $exitCode: '
-          '$executable ${arguments.join(' ')}');
+      Logger.error(
+        'Command failed with exit code $exitCode: '
+        '$executable ${arguments.join(' ')}',
+      );
       exit(exitCode);
     }
   }

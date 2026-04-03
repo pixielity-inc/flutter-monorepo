@@ -19,7 +19,7 @@ final class GetExampleItems {
   /// [repository] must be a concrete implementation of [ExampleRepository],
   /// typically provided by a Riverpod provider or service locator.
   const GetExampleItems({required ExampleRepository repository})
-      : _repository = repository;
+    : _repository = repository;
 
   /// The repository used to fetch items.
   final ExampleRepository _repository;

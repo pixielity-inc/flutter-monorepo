@@ -20,7 +20,8 @@ Future<void> runClean() async {
 
   await ProcessRunner.run('melos', [
     'exec',
-    '-c', '4',
+    '-c',
+    '4',
     '--',
     'flutter',
     'clean',

@@ -39,10 +39,7 @@ Future<void> runPipelineCi() async {
   // Steps 2 & 3 — lint and test are independent; run them concurrently
   // to minimize total pipeline time.
   Logger.step('Running lint and test in parallel...');
-  await Future.wait([
-    runLint(),
-    runTest(),
-  ]);
+  await Future.wait([runLint(), runTest()]);
 
   Logger.newline();
   Logger.success('Pipeline CI complete.');

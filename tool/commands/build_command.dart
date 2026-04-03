@@ -24,11 +24,10 @@ Future<void> runBuild({
 }) async {
   Logger.step('Building $appName ($target)...');
 
-  await ProcessRunner.run(
-    'flutter',
-    ['build', target],
-    workingDirectory: WorkspacePaths.app(appName),
-  );
+  await ProcessRunner.run('flutter', [
+    'build',
+    target,
+  ], workingDirectory: WorkspacePaths.app(appName));
 
   Logger.success('Build complete.');
 }

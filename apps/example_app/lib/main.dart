@@ -7,9 +7,5 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// [ProviderScope] must wrap the entire widget tree so that Riverpod
 /// providers can be read from any descendant widget.
 void main() {
-  runApp(
-    const ProviderScope(
-      child: ExampleApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: ExampleApp()));
 }

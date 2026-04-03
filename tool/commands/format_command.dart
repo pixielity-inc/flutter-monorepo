@@ -25,11 +25,14 @@ Future<void> runFormat({bool check = false}) async {
 
   await ProcessRunner.run('melos', [
     'exec',
-    '-c', '4',
+    '-c',
+    '4',
     '--',
     'dart',
     ...formatArgs,
   ]);
 
-  Logger.success(check ? 'All files are correctly formatted.' : 'Format complete.');
+  Logger.success(
+    check ? 'All files are correctly formatted.' : 'Format complete.',
+  );
 }
