@@ -1,112 +1,85 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="1200" height="360">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="360" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#0D1117"/>
-      <stop offset="100%" stop-color="#0D1B2A"/>
-    </linearGradient>
-    <linearGradient id="topLine" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#54C5F8" stop-opacity="0"/>
-      <stop offset="30%" stop-color="#54C5F8"/>
-      <stop offset="70%" stop-color="#29B6F6"/>
-      <stop offset="100%" stop-color="#29B6F6" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="divLine" x1="0" y1="0" x2="0" y2="360" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#54C5F8" stop-opacity="0"/>
-      <stop offset="40%" stop-color="#54C5F8" stop-opacity="0.35"/>
-      <stop offset="60%" stop-color="#54C5F8" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#54C5F8" stop-opacity="0"/>
-    </linearGradient>
-    <clipPath id="clip"><rect width="1200" height="360" rx="14"/></clipPath>
-  </defs>
+<svg width="100%" viewBox="0 0 1200 370" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <pattern id="dots1" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#2a1f0a"/>
+  </pattern>
+  <linearGradient id="divider1" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#f59e0b" stop-opacity="0"/>
+    <stop offset="40%" stop-color="#f59e0b" stop-opacity="0.4"/>
+    <stop offset="60%" stop-color="#f59e0b" stop-opacity="0.4"/>
+    <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="accent1" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#f59e0b"/>
+    <stop offset="100%" stop-color="#ef4444"/>
+  </linearGradient>
+</defs>
 
-  <g clip-path="url(#clip)">
-    <rect width="1200" height="360" fill="url(#bg)"/>
+<!-- Background -->
+<rect width="1200" height="360" fill="#0f0a00" style="fill:rgb(15, 10, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<rect width="1200" height="360" fill="url(#dots1)" style="stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
 
-    <!-- dot grid -->
-    <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse">
-      <circle cx="16" cy="16" r="0.8" fill="#30363D"/>
-    </pattern>
-    <rect width="1200" height="360" fill="url(#dots)"/>
+<!-- Top accent bar -->
+<rect width="1200" height="3" fill="url(#accent1)" style="stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
 
-    <!-- top accent -->
-    <rect x="0" y="0" width="1200" height="2.5" fill="url(#topLine)"/>
+<!-- Flutter Logo (F made of parallelograms) -->
+<g transform="translate(52, 100)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <!-- Top blue parallelogram -->
+  <polygon points="0,0 54,0 72,20 18,20" fill="#54C5F8" style="fill:rgb(84, 197, 248);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- Middle lighter blue -->
+  <polygon points="18,26 72,26 54,46 0,46" fill="#54C5F8" opacity="0.85" style="fill:rgb(84, 197, 248);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.85;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- Bottom dark chevron -->
+  <polygon points="0,52 30,52 54,76 24,76" fill="#0175C2" style="fill:rgb(1, 117, 194);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <polygon points="30,52 54,76 72,76 48,52" fill="#00B4AB" style="fill:rgb(0, 180, 171);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+</g>
 
-    <!-- ═══════════════ LEFT PANEL (0–660) ═══════════════ -->
+<!-- Title -->
+<text x="158" y="143" font-family="system-ui,-apple-system,sans-serif" font-size="44" font-weight="700" fill="#fef3c7" style="fill:rgb(254, 243, 199);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:44px;font-weight:700;text-anchor:start;dominant-baseline:auto">Flutter Monorepo</text>
 
-    <!-- Flutter logo — official diamond/chevron shape -->
-    <g transform="translate(56, 108)">
-      <!-- top parallelogram -->
-      <polygon points="0,0 88,0 62,26 0,26" fill="#54C5F8"/>
-      <!-- middle parallelogram -->
-      <polygon points="0,38 62,38 88,64 0,64" fill="#54C5F8"/>
-      <!-- bottom chevron left -->
-      <polygon points="0,64 62,64 36,90 0,90" fill="#01579B"/>
-      <!-- bottom chevron right highlight -->
-      <polygon points="62,64 88,64 62,90 36,90" fill="#29B6F6"/>
-    </g>
+<!-- Subtitles -->
+<text x="158" y="172" font-family="system-ui,-apple-system,sans-serif" font-size="15" fill="#92400e" style="fill:rgb(146, 64, 14);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:15px;font-weight:400;text-anchor:start;dominant-baseline:auto">Production-ready Flutter monorepo template</text>
+<text x="158" y="193" font-family="system-ui,-apple-system,sans-serif" font-size="15" fill="#92400e" style="fill:rgb(146, 64, 14);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:15px;font-weight:400;text-anchor:start;dominant-baseline:auto">Melos 7 · Dart CLI · Clean Architecture · Riverpod</text>
 
-    <!-- Title — x=188 keeps clear of logo (logo ends ~144) -->
-    <text x="188" y="152"
-      font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif"
-      font-size="44" font-weight="700" fill="#E6EDF3" letter-spacing="-0.5">Flutter Monorepo</text>
+<!-- Badge row 1 -->
+<g transform="translate(158, 210)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <!-- Flutter 3.x -->
+  <rect x="0" y="0" width="88" height="26" rx="5" fill="#f59e0b" fill-opacity="0.15" stroke="#f59e0b" stroke-opacity="0.6" stroke-width="1" style="fill:rgb(245, 158, 11);stroke:rgb(245, 158, 11);color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="44" y="17.5" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="600" fill="#fbbf24" style="fill:rgb(251, 191, 36);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:11.5px;font-weight:600;text-anchor:middle;dominant-baseline:auto">Flutter 3.x</text>
+  <!-- Dart 3.x -->
+  <rect x="96" y="0" width="78" height="26" rx="5" fill="#ea580c" fill-opacity="0.15" stroke="#ea580c" stroke-opacity="0.6" stroke-width="1" style="fill:rgb(234, 88, 12);stroke:rgb(234, 88, 12);color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="135" y="17.5" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="600" fill="#fb923c" style="fill:rgb(251, 146, 60);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:11.5px;font-weight:600;text-anchor:middle;dominant-baseline:auto">Dart 3.x</text>
+  <!-- Melos 7 -->
+  <rect x="182" y="0" width="76" height="26" rx="5" fill="#d97706" fill-opacity="0.15" stroke="#d97706" stroke-opacity="0.6" stroke-width="1" style="fill:rgb(217, 119, 6);stroke:rgb(217, 119, 6);color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="220" y="17.5" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="600" fill="#fbbf24" style="fill:rgb(251, 191, 36);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:11.5px;font-weight:600;text-anchor:middle;dominant-baseline:auto">Melos 7</text>
+  <!-- Riverpod -->
+  <rect x="266" y="0" width="80" height="26" rx="5" fill="#b45309" fill-opacity="0.15" stroke="#b45309" stroke-opacity="0.6" stroke-width="1" style="fill:rgb(180, 83, 9);stroke:rgb(180, 83, 9);color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="306" y="17.5" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="600" fill="#f59e0b" style="fill:rgb(245, 158, 11);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:11.5px;font-weight:600;text-anchor:middle;dominant-baseline:auto">Riverpod</text>
+</g>
 
-    <!-- Subtitle line 1 -->
-    <text x="188" y="190"
-      font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif"
-      font-size="15.5" fill="#8B949E">
-      Production-ready Flutter monorepo template
-    </text>
+<!-- Badge row 2 -->
+<g transform="translate(158, 244)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="0" y="0" width="136" height="26" rx="5" fill="#92400e" fill-opacity="0.2" stroke="#92400e" stroke-opacity="0.6" stroke-width="1" style="fill:rgb(146, 64, 14);stroke:rgb(146, 64, 14);color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="68" y="17.5" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="600" fill="#fcd34d" style="fill:rgb(252, 211, 77);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:11.5px;font-weight:600;text-anchor:middle;dominant-baseline:auto">very_good_analysis</text>
+</g>
 
-    <!-- Subtitle line 2 -->
-    <text x="188" y="212"
-      font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif"
-      font-size="15.5" fill="#8B949E">
-      Melos 7 · Dart CLI · Clean Architecture · Riverpod
-    </text>
+<!-- Divider -->
+<line x1="640" y1="20" x2="640" y2="320" stroke="url(#divider1)" stroke-width="1" style="fill:rgb(0, 0, 0);color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
 
-    <!-- Badges — row 1: Flutter, Dart, Melos (3 badges × 90px + 10px gap = 290px, starts at x=188, ends at 478) -->
-    <g transform="translate(188, 232)">
-      <rect x="0"   y="0" width="86" height="26" rx="5" fill="#54C5F8" fill-opacity="0.1" stroke="#54C5F8" stroke-width="0.8" stroke-opacity="0.6"/>
-      <text x="43"  y="17.5" font-family="system-ui,sans-serif" font-size="11.5" font-weight="600" fill="#54C5F8" text-anchor="middle">Flutter 3.x</text>
+<!-- FEATURES label -->
+<text x="672" y="96" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600" fill="#78350f" letter-spacing="2" style="fill:rgb(120, 53, 15);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:11px;font-weight:600;text-anchor:start;dominant-baseline:auto">FEATURES</text>
 
-      <rect x="96"  y="0" width="76" height="26" rx="5" fill="#00BCD4" fill-opacity="0.1" stroke="#00BCD4" stroke-width="0.8" stroke-opacity="0.6"/>
-      <text x="134" y="17.5" font-family="system-ui,sans-serif" font-size="11.5" font-weight="600" fill="#00BCD4" text-anchor="middle">Dart 3.x</text>
+<!-- Feature lines -->
+<g font-family="system-ui,-apple-system,sans-serif" font-size="14" fill="#fef3c7" style="fill:rgb(254, 243, 199);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <text x="672" y="126" style="fill:rgb(254, 243, 199);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:400;text-anchor:start;dominant-baseline:auto"><tspan fill="#f59e0b" font-weight="700" style="fill:rgb(245, 158, 11);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:700;text-anchor:start;dominant-baseline:auto">› </tspan>Clean Architecture — Domain / Data / Feature</text>
+  <text x="672" y="154" style="fill:rgb(254, 243, 199);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:400;text-anchor:start;dominant-baseline:auto"><tspan fill="#f59e0b" font-weight="700" style="fill:rgb(245, 158, 11);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:700;text-anchor:start;dominant-baseline:auto">› </tspan>Dart CLI — lint, test, build, gen, publish</text>
+  <text x="672" y="182" style="fill:rgb(254, 243, 199);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:400;text-anchor:start;dominant-baseline:auto"><tspan fill="#f59e0b" font-weight="700" style="fill:rgb(245, 158, 11);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:700;text-anchor:start;dominant-baseline:auto">› </tspan>GitHub Actions — CI, CD build, CD publish</text>
+  <text x="672" y="210" style="fill:rgb(254, 243, 199);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:400;text-anchor:start;dominant-baseline:auto"><tspan fill="#f59e0b" font-weight="700" style="fill:rgb(245, 158, 11);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:700;text-anchor:start;dominant-baseline:auto">› </tspan>Git hooks — format + analyze on commit</text>
+  <text x="672" y="238" style="fill:rgb(254, 243, 199);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:400;text-anchor:start;dominant-baseline:auto"><tspan fill="#f59e0b" font-weight="700" style="fill:rgb(245, 158, 11);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:700;text-anchor:start;dominant-baseline:auto">› </tspan>Kiro MCP — Dart SDK + HeroUI Native</text>
+  <text x="672" y="266" style="fill:rgb(254, 243, 199);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:400;text-anchor:start;dominant-baseline:auto"><tspan fill="#f59e0b" font-weight="700" style="fill:rgb(245, 158, 11);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:700;text-anchor:start;dominant-baseline:auto">› </tspan>Dependabot · CODEOWNERS · PR templates</text>
+</g>
 
-      <rect x="182" y="0" width="76" height="26" rx="5" fill="#A78BFA" fill-opacity="0.1" stroke="#A78BFA" stroke-width="0.8" stroke-opacity="0.6"/>
-      <text x="220" y="17.5" font-family="system-ui,sans-serif" font-size="11.5" font-weight="600" fill="#A78BFA" text-anchor="middle">Melos 7</text>
-
-      <rect x="268" y="0" width="84" height="26" rx="5" fill="#34D399" fill-opacity="0.1" stroke="#34D399" stroke-width="0.8" stroke-opacity="0.6"/>
-      <text x="310" y="17.5" font-family="system-ui,sans-serif" font-size="11.5" font-weight="600" fill="#34D399" text-anchor="middle">Riverpod</text>
-    </g>
-
-    <!-- Badges — row 2: VGA alone on its own line -->
-    <g transform="translate(188, 268)">
-      <rect x="0"   y="0" width="140" height="26" rx="5" fill="#FCD34D" fill-opacity="0.1" stroke="#FCD34D" stroke-width="0.8" stroke-opacity="0.6"/>
-      <text x="70"  y="17.5" font-family="system-ui,sans-serif" font-size="11.5" font-weight="600" fill="#FCD34D" text-anchor="middle">very_good_analysis</text>
-    </g>
-
-    <!-- divider -->
-    <rect x="640" y="0" width="1" height="360" fill="url(#divLine)"/>
-
-    <!-- ═══════════════ RIGHT PANEL (660–1200) ═══════════════ -->
-
-    <text x="672" y="72"
-      font-family="system-ui,sans-serif" font-size="10.5" font-weight="700"
-      fill="#484F58" letter-spacing="2.5">FEATURES</text>
-
-    <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif"
-       font-size="14" fill="#C9D1D9">
-      <text x="672" y="108"><tspan fill="#54C5F8">›</tspan><tspan dx="10">Clean Architecture — Domain / Data / Feature</tspan></text>
-      <text x="672" y="144"><tspan fill="#54C5F8">›</tspan><tspan dx="10">Dart CLI — lint, test, build, gen, publish</tspan></text>
-      <text x="672" y="180"><tspan fill="#54C5F8">›</tspan><tspan dx="10">GitHub Actions — CI, CD build, CD publish</tspan></text>
-      <text x="672" y="216"><tspan fill="#54C5F8">›</tspan><tspan dx="10">Git hooks — format + analyze on commit</tspan></text>
-      <text x="672" y="252"><tspan fill="#54C5F8">›</tspan><tspan dx="10">Kiro MCP — Dart SDK + HeroUI Native</tspan></text>
-      <text x="672" y="288"><tspan fill="#54C5F8">›</tspan><tspan dx="10">Dependabot · CODEOWNERS · PR templates</tspan></text>
-    </g>
-
-    <!-- bottom bar -->
-    <rect x="0" y="328" width="1200" height="32" fill="#010409" fill-opacity="0.7"/>
-    <text x="56" y="349" font-family="system-ui,sans-serif" font-size="11.5" fill="#484F58">github.com/pixielity-inc/flutter-monorepo</text>
-    <text x="1144" y="349" font-family="system-ui,sans-serif" font-size="11.5" fill="#484F58" text-anchor="end">MIT License</text>
-  </g>
+<!-- Bottom bar -->
+<rect y="318" width="1200" height="42" fill="#070400" style="fill:rgb(7, 4, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<text x="32" y="344" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#78350f" style="fill:rgb(120, 53, 15);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:13px;font-weight:400;text-anchor:start;dominant-baseline:auto">github.com/pixielity-inc/flutter-monorepo</text>
+<text x="1168" y="344" text-anchor="end" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#78350f" style="fill:rgb(120, 53, 15);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:13px;font-weight:400;text-anchor:end;dominant-baseline:auto">MIT License</text>
 </svg>
