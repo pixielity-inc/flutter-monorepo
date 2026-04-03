@@ -1,7 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'package:example_app/features/items/data/fake_example_repository.dart';
-import 'package:example_package/example_package.dart';
+import 'package:pixielity_example_app/features/items/data/fake_example_repository.dart';
+import 'package:pixielity_core/pixielity_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Provides the [ExampleRepository] implementation used across the items

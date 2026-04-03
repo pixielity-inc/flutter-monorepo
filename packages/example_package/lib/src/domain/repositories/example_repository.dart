@@ -1,4 +1,4 @@
-import 'package:example_package/src/domain/entities/example_item.dart';
+import 'package:pixielity_core/src/domain/entities/example_item.dart';
 
 /// Abstract contract for fetching and managing [ExampleItem] data.
 ///

@@ -9,7 +9,7 @@
 ///
 /// Usage:
 /// ```dart
-/// import 'package:example_package/example_package.dart';
+/// import 'package:pixielity_core/pixielity_core.dart';
 /// ```
 // ignore_for_file: comment_references
 // (ExampleItem, ExampleRepository, GetExampleItems are re-exported from this

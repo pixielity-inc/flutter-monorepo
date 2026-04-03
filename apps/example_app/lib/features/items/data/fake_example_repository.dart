@@ -1,4 +1,4 @@
-import 'package:example_package/example_package.dart';
+import 'package:pixielity_core/pixielity_core.dart';
 
 /// An in-memory [ExampleRepository] that returns hard-coded items.
 ///

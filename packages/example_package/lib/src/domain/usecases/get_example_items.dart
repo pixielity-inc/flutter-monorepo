@@ -1,5 +1,5 @@
-import 'package:example_package/src/domain/entities/example_item.dart';
-import 'package:example_package/src/domain/repositories/example_repository.dart';
+import 'package:pixielity_core/src/domain/entities/example_item.dart';
+import 'package:pixielity_core/src/domain/repositories/example_repository.dart';
 
 /// Use case: fetch all [ExampleItem]s from the repository.
 ///

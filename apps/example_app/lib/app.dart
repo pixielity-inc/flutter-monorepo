@@ -1,4 +1,4 @@
-import 'package:example_app/features/items/presentation/item_list_screen.dart';
+import 'package:pixielity_example_app/features/items/presentation/item_list_screen.dart';
 import 'package:flutter/material.dart';
 
 /// The root [MaterialApp] widget for the example application.

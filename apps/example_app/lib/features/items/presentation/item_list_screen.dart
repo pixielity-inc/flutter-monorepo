@@ -1,5 +1,5 @@
-import 'package:example_app/features/items/providers/items_provider.dart';
-import 'package:example_package/example_package.dart';
+import 'package:pixielity_example_app/features/items/providers/items_provider.dart';
+import 'package:pixielity_core/pixielity_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
