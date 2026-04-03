@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# bin/cli — shortcut for `dart run tool/cli.dart`
+#
+# Usage:
+#   ./bin/cli lint
+#   ./bin/cli test
+#   ./bin/cli build --target=ios
+#   ./bin/cli dev --app=my_app
+#   ./bin/cli help
+#
+# This script resolves the monorepo root so it works from any subdirectory.
+
+set -euo pipefail
+
+# Resolve the monorepo root (where this script lives is bin/, go one up).
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(dirname "$SCRIPT_DIR")"
+
+exec dart run "$ROOT/tool/cli.dart" "$@"

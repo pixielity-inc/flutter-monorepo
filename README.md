@@ -72,66 +72,66 @@ cd flutter-monorepo
 dart pub get && melos bootstrap
 
 # 4. Install git hooks
-dart run tool/cli.dart hooks:install
+./bin/cli hooks:install
 
 # 5. Run the example app
-dart run tool/cli.dart dev
+./bin/cli dev
 ```
 
 ---
 
 ## CLI
 
-All commands run from the repo root via `dart run tool/cli.dart <command>`.
+All commands run from the repo root via `./bin/cli <command>` (or `./bin/cli <command>`).
 
 ### Development
 
 ```bash
-dart run tool/cli.dart dev                    # Run pixielity_example_app
-dart run tool/cli.dart dev --app=my_app       # Run a specific app
+./bin/cli dev                    # Run pixielity_example_app
+./bin/cli dev --app=my_app       # Run a specific app
 ```
 
 ### Quality
 
 ```bash
-dart run tool/cli.dart lint                   # flutter analyze (parallel)
-dart run tool/cli.dart format                 # dart format (parallel)
-dart run tool/cli.dart test                   # flutter test (parallel)
-dart run tool/cli.dart gen                    # build_runner (sequential)
-dart run tool/cli.dart fix                    # dart fix --apply (parallel)
-dart run tool/cli.dart clean                  # flutter clean (parallel)
+./bin/cli lint                   # flutter analyze (parallel)
+./bin/cli format                 # dart format (parallel)
+./bin/cli test                   # flutter test (parallel)
+./bin/cli gen                    # build_runner (sequential)
+./bin/cli fix                    # dart fix --apply (parallel)
+./bin/cli clean                  # flutter clean (parallel)
 ```
 
 ### Build
 
 ```bash
-dart run tool/cli.dart build                  # Android APK
-dart run tool/cli.dart build --target=ios     # iOS
-dart run tool/cli.dart build --target=web     # Web
-dart run tool/cli.dart build --app=my_app --target=apk
+./bin/cli build                  # Android APK
+./bin/cli build --target=ios     # iOS
+./bin/cli build --target=web     # Web
+./bin/cli build --app=my_app --target=apk
 ```
 
 ### Scaffolding
 
 ```bash
-dart run tool/cli.dart feature auth           # Scaffold a new feature package
+./bin/cli feature auth           # Scaffold a new feature package
 ```
 
 ### Pipelines
 
 ```bash
-dart run tool/cli.dart pipeline:ci            # gen → lint + test (parallel)
-dart run tool/cli.dart pipeline:dev           # gen → dev
-dart run tool/cli.dart pipeline:release       # gen → lint → test → build
+./bin/cli pipeline:ci            # gen → lint + test (parallel)
+./bin/cli pipeline:dev           # gen → dev
+./bin/cli pipeline:release       # gen → lint → test → build
 ```
 
 ### Versioning & publishing
 
 ```bash
-dart run tool/cli.dart version                # Preview version bumps (dry-run)
-dart run tool/cli.dart version --no-dry-run   # Bump + update CHANGELOGs
-dart run tool/cli.dart publish                # Dry-run publish to pub.dev
-dart run tool/cli.dart publish --no-dry-run   # Publish to pub.dev
+./bin/cli version                # Preview version bumps (dry-run)
+./bin/cli version --no-dry-run   # Bump + update CHANGELOGs
+./bin/cli publish                # Dry-run publish to pub.dev
+./bin/cli publish --no-dry-run   # Publish to pub.dev
 ```
 
 ### Melos scripts (alternative)
@@ -196,8 +196,8 @@ dart pub get
 ## Publishing a package
 
 ```bash
-dart run tool/cli.dart version --no-dry-run
-dart run tool/cli.dart publish --no-dry-run
+./bin/cli version --no-dry-run
+./bin/cli publish --no-dry-run
 # Or push a tag to trigger CI:
 git tag pixielity_core-v1.0.0 && git push --tags
 ```
