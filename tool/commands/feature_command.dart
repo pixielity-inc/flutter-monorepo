@@ -167,7 +167,6 @@ include: ../../../../analysis_options.yaml
 
 /// Generates the barrel/library file for a new feature package.
 String _barrelTemplate(String name) {
-  final className = _toPascalCase(name);
   return '''
 /// ${name}_feature.dart
 ///

@@ -1,4 +1,4 @@
-/// example_package
+/// pixielity_core
 ///
 /// Canonical domain-layer package for the Flutter monorepo.
 ///
