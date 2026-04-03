@@ -1,0 +1,106 @@
+# .github/workflows/ci.yml
+#
+# Continuous Integration pipeline.
+#
+# Runs on every pull request and every push to `main`.
+# Steps (in order):
+#   1. Bootstrap — install all workspace dependencies via Melos
+#   2. Format check — fail if any file is not formatted
+#   3. Lint — flutter analyze across all packages
+#   4. Test — flutter test across all packages with coverage
+#   5. Upload coverage — send to Codecov
+#
+# All steps use the pinned Flutter version defined in .flutter-version
+# (or the `flutter-version` input below) to ensure reproducible builds.
+
+name: CI
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main]
+
+# Cancel in-progress runs for the same branch to save CI minutes.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: Lint · Test · Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      # -----------------------------------------------------------------------
+      # 1. Checkout
+      # -----------------------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # -----------------------------------------------------------------------
+      # 2. Flutter SDK
+      # -----------------------------------------------------------------------
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          # Pin to a specific channel for reproducibility.
+          # Update this when you want to upgrade Flutter across the team.
+          flutter-version: "3.x"
+          channel: stable
+          cache: true
+
+      # -----------------------------------------------------------------------
+      # 3. Dart pub cache
+      # -----------------------------------------------------------------------
+      - name: Cache pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            ${{ env.FLUTTER_HOME }}/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-
+
+      # -----------------------------------------------------------------------
+      # 4. Install Melos
+      # -----------------------------------------------------------------------
+      - name: Install Melos
+        run: dart pub global activate melos
+
+      # -----------------------------------------------------------------------
+      # 5. Bootstrap workspace
+      # -----------------------------------------------------------------------
+      - name: Bootstrap
+        run: melos bootstrap
+
+      # -----------------------------------------------------------------------
+      # 6. Format check (fail if unformatted)
+      # -----------------------------------------------------------------------
+      - name: Check formatting
+        run: melos exec -c 4 -- dart format --set-exit-if-changed .
+
+      # -----------------------------------------------------------------------
+      # 7. Lint
+      # -----------------------------------------------------------------------
+      - name: Analyze
+        run: melos exec -c 4 -- flutter analyze --fatal-infos
+
+      # -----------------------------------------------------------------------
+      # 8. Test with coverage
+      # -----------------------------------------------------------------------
+      - name: Test
+        run: |
+          melos exec -c 4 -- flutter test --coverage --coverage-path=coverage/lcov.info
+
+      # -----------------------------------------------------------------------
+      # 9. Upload coverage to Codecov
+      # -----------------------------------------------------------------------
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        with:
+          # Set CODECOV_TOKEN in your repository secrets.
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: "**/coverage/lcov.info"
+          fail_ci_if_error: false
+          verbose: true

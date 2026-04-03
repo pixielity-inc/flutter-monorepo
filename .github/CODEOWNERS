@@ -1,0 +1,36 @@
+# CODEOWNERS — flutter-monorepo
+#
+# Defines who is automatically requested for review when a PR touches
+# specific files or directories.
+#
+# Rules are evaluated top-to-bottom; the last matching rule wins.
+# Docs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# ---------------------------------------------------------------------------
+# Default — all files require review from the core team
+# ---------------------------------------------------------------------------
+* @your-org/core-team
+
+# ---------------------------------------------------------------------------
+# CI / tooling — require a DevOps/platform review
+# ---------------------------------------------------------------------------
+.github/                    @your-org/platform
+.githooks/                  @your-org/platform
+melos.yaml                  @your-org/platform
+analysis_options.yaml       @your-org/platform
+
+# ---------------------------------------------------------------------------
+# Applications
+# ---------------------------------------------------------------------------
+apps/example_app/           @your-org/mobile-team
+
+# ---------------------------------------------------------------------------
+# Shared packages
+# ---------------------------------------------------------------------------
+packages/                   @your-org/core-team
+
+# ---------------------------------------------------------------------------
+# Documentation
+# ---------------------------------------------------------------------------
+*.md                        @your-org/core-team
+CONTRIBUTING.md             @your-org/core-team

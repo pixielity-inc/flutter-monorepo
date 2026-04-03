@@ -1,0 +1,113 @@
+# .github/workflows/cd_build.yml
+#
+# Continuous Delivery — Build app artifacts
+#
+# Triggered on pushes to `main` and on version tags matching `*-v*`.
+# Builds Android APK and (optionally) iOS IPA for each app in apps/.
+#
+# Artifacts are uploaded to GitHub Actions and can be downloaded from
+# the Actions tab or consumed by a deployment workflow.
+#
+# Required secrets for iOS:
+#   APPLE_CERTIFICATE_BASE64   — p12 certificate (base64 encoded)
+#   APPLE_CERTIFICATE_PASSWORD — p12 password
+#   APPLE_PROVISIONING_PROFILE — .mobileprovision (base64 encoded)
+#   KEYCHAIN_PASSWORD          — temporary keychain password
+
+name: Build Apps
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - "*-v[0-9]+.[0-9]+.[0-9]+"
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Android build
+  # ---------------------------------------------------------------------------
+  build-android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Build all apps in parallel.
+      matrix:
+        app: [example_app]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.x"
+          channel: stable
+          cache: true
+
+      - name: Setup Java (required for Android builds)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Install Melos
+        run: dart pub global activate melos
+
+      - name: Bootstrap
+        run: melos bootstrap
+
+      - name: Build APK — ${{ matrix.app }}
+        run: flutter build apk --release
+        working-directory: apps/${{ matrix.app }}
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.app }}-apk
+          path: apps/${{ matrix.app }}/build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 30
+
+  # ---------------------------------------------------------------------------
+  # iOS build (macOS runner required)
+  # ---------------------------------------------------------------------------
+  build-ios:
+    name: Build iOS IPA
+    runs-on: macos-latest
+
+    strategy:
+      matrix:
+        app: [example_app]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.x"
+          channel: stable
+          cache: true
+
+      - name: Install Melos
+        run: dart pub global activate melos
+
+      - name: Bootstrap
+        run: melos bootstrap
+
+      - name: Build iOS (no codesign for CI)
+        run: flutter build ios --release --no-codesign
+        working-directory: apps/${{ matrix.app }}
+
+      - name: Upload iOS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.app }}-ios
+          path: apps/${{ matrix.app }}/build/ios/iphoneos/Runner.app
+          retention-days: 30

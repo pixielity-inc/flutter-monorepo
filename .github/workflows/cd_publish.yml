@@ -1,0 +1,116 @@
+# .github/workflows/cd_publish.yml
+#
+# Continuous Delivery — Publish packages to pub.dev
+#
+# Triggered when a tag matching `<package_name>-v*` is pushed.
+# Examples:
+#   git tag example_package-v1.0.0 && git push --tags
+#
+# The workflow:
+#   1. Bootstraps the workspace
+#   2. Runs CI checks (lint + test) as a gate
+#   3. Publishes the tagged package to pub.dev
+#
+# Required secrets:
+#   PUB_CREDENTIALS — contents of ~/.pub-cache/credentials.json
+#                     obtained by running `dart pub login` locally.
+#
+# To publish manually without CI:
+#   dart pub publish --directory packages/<name>
+
+name: Publish Package
+
+on:
+  push:
+    # Only trigger on version tags, e.g. example_package-v1.2.3
+    tags:
+      - "*-v[0-9]+.[0-9]+.[0-9]+"
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish to pub.dev
+    runs-on: ubuntu-latest
+
+    # Only run on the main repository, not forks.
+    if: github.repository_owner == github.event.repository.owner.login
+
+    steps:
+      # -----------------------------------------------------------------------
+      # 1. Checkout
+      # -----------------------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # -----------------------------------------------------------------------
+      # 2. Flutter SDK
+      # -----------------------------------------------------------------------
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.x"
+          channel: stable
+          cache: true
+
+      # -----------------------------------------------------------------------
+      # 3. Install Melos
+      # -----------------------------------------------------------------------
+      - name: Install Melos
+        run: dart pub global activate melos
+
+      # -----------------------------------------------------------------------
+      # 4. Bootstrap
+      # -----------------------------------------------------------------------
+      - name: Bootstrap
+        run: melos bootstrap
+
+      # -----------------------------------------------------------------------
+      # 5. Lint gate — do not publish broken code
+      # -----------------------------------------------------------------------
+      - name: Analyze
+        run: melos exec -c 4 -- flutter analyze --fatal-infos
+
+      # -----------------------------------------------------------------------
+      # 6. Test gate
+      # -----------------------------------------------------------------------
+      - name: Test
+        run: melos exec -c 4 -- flutter test
+
+      # -----------------------------------------------------------------------
+      # 7. Extract package name from tag (e.g. "example_package" from
+      #    "example_package-v1.0.0")
+      # -----------------------------------------------------------------------
+      - name: Extract package name from tag
+        id: tag
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          PACKAGE="${TAG%-v*}"
+          VERSION="${TAG##*-v}"
+          echo "package=$PACKAGE" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Publishing $PACKAGE @ $VERSION"
+
+      # -----------------------------------------------------------------------
+      # 8. Restore pub credentials
+      # -----------------------------------------------------------------------
+      - name: Restore pub credentials
+        run: |
+          mkdir -p ~/.pub-cache
+          echo '${{ secrets.PUB_CREDENTIALS }}' > ~/.pub-cache/credentials.json
+
+      # -----------------------------------------------------------------------
+      # 9. Publish
+      # -----------------------------------------------------------------------
+      - name: Publish ${{ steps.tag.outputs.package }}
+        run: |
+          PACKAGE="${{ steps.tag.outputs.package }}"
+          # Determine if it's under packages/ or apps/ (apps are never published)
+          if [ -d "packages/$PACKAGE" ]; then
+            dart pub publish --directory "packages/$PACKAGE" --force
+          else
+            echo "Package '$PACKAGE' not found under packages/. Skipping."
+            exit 1
+          fi

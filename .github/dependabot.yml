@@ -1,0 +1,53 @@
+# .github/dependabot.yml — flutter-monorepo
+#
+# Dependabot keeps dependencies up-to-date automatically by opening PRs
+# when newer versions are available.
+#
+# Docs: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates
+
+version: 2
+
+updates:
+  # ---------------------------------------------------------------------------
+  # Flutter / Dart — pub.dev packages
+  # Scans every pubspec.yaml in the repo.
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: pub
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "08:00"
+      timezone: UTC
+    # Group all non-breaking updates into a single PR to reduce noise.
+    groups:
+      dart-dependencies:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    labels:
+      - dependencies
+      - dart
+    # Limit open PRs to avoid overwhelming reviewers.
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+
+  # ---------------------------------------------------------------------------
+  # GitHub Actions — keep action versions pinned and up-to-date
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "08:00"
+      timezone: UTC
+    groups:
+      github-actions:
+        patterns: ["*"]
+    labels:
+      - dependencies
+      - ci
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "ci(deps)"
