@@ -1,11 +1,11 @@
-import 'package:pixielity_example_app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Bootstrap the Flutter application.
+import 'package:pixielity_example_app/app.dart';
+
+/// Entry point for the Pixielity example application.
 ///
-/// [ProviderScope] must wrap the entire widget tree so that Riverpod
-/// providers can be read from any descendant widget.
+/// Wraps the app in a [ProviderScope] for Riverpod state management.
 void main() {
-  runApp(const ProviderScope(child: ExampleApp()));
+  runApp(const ProviderScope(child: Application()));
 }

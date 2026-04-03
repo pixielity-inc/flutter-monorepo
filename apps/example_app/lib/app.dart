@@ -1,25 +1,40 @@
-import 'package:pixielity_example_app/features/items/presentation/item_list_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:forui/forui.dart';
 
-/// The root [MaterialApp] widget for the example application.
+import 'package:pixielity_example_app/pages/home_page.dart';
+
+/// Root application widget.
 ///
-/// Responsibilities:
-/// - Configure the global [ThemeData]
-/// - Set the home screen ([ItemListScreen])
-class ExampleApp extends StatelessWidget {
-  /// Creates the [ExampleApp] root widget.
-  const ExampleApp({super.key});
+/// Sets up Forui theming with platform-aware touch/desktop variants,
+/// localization, and the [FToaster] + [FTooltipGroup] wrappers.
+class Application extends StatelessWidget {
+  /// Creates the root [Application] widget.
+  const Application({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Use touch theme on mobile, desktop theme on desktop platforms.
+    final theme =
+        const <TargetPlatform>{
+          TargetPlatform.android,
+          TargetPlatform.iOS,
+          TargetPlatform.fuchsia,
+        }.contains(defaultTargetPlatform)
+        ? FThemes.neutral.dark.touch
+        : FThemes.neutral.dark.desktop;
+
     return MaterialApp(
-      title: 'Example App',
+      title: 'Pixielity Flutter Monorepo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+      supportedLocales: FLocalizations.supportedLocales,
+      localizationsDelegates: const [...FLocalizations.localizationsDelegates],
+      theme: theme.toApproximateMaterialTheme(),
+      builder: (_, child) => FTheme(
+        data: theme,
+        child: FToaster(child: FTooltipGroup(child: child!)),
       ),
-      home: const ItemListScreen(),
+      home: const FScaffold(child: HomePage()),
     );
   }
 }
