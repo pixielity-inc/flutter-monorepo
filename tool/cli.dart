@@ -50,8 +50,10 @@ Future<void> main(List<String> args) async {
 
       case 'dev':
         // Optional: --app=<name>
+        // All other flags (e.g. -d chrome, --release) are forwarded to flutter run.
         final appName = _flag(rest, 'app') ?? 'example_app';
-        await runDev(appName: appName);
+        final extraArgs = _extraArgs(rest, {'app'});
+        await runDev(appName: appName, extraArgs: extraArgs);
 
       case 'build':
         // Optional: --app=<name> --target=<apk|ios|web|...>
@@ -153,12 +155,6 @@ Future<void> main(List<String> args) async {
 ///
 /// Supports both `--key=value` and `--key value` formats.
 /// Returns `null` if the flag is not present.
-///
-/// Example:
-/// ```dart
-/// _flag(['--app=example_app'], 'app') // → 'example_app'
-/// _flag(['--app', 'example_app'], 'app') // → 'example_app'
-/// ```
 String? _flag(List<String> args, String key) {
   for (var i = 0; i < args.length; i++) {
     final arg = args[i];
@@ -176,6 +172,35 @@ String? _flag(List<String> args, String key) {
   return null;
 }
 
+/// Collects all args that are NOT consumed by [_flag] for the given [knownKeys].
+///
+/// Returns a list of args to forward to the underlying command.
+/// Example:
+///   _extraArgs(['--app=foo', '-d', 'chrome', '--release'], {'app'})
+///   → ['-d', 'chrome', '--release']
+List<String> _extraArgs(List<String> args, Set<String> knownKeys) {
+  final extra = <String>[];
+  for (var i = 0; i < args.length; i++) {
+    final arg = args[i];
+    var consumed = false;
+    for (final key in knownKeys) {
+      if (arg.startsWith('--$key=')) {
+        consumed = true;
+        break;
+      }
+      if (arg == '--$key' && i + 1 < args.length) {
+        consumed = true;
+        i++; // skip the value too
+        break;
+      }
+    }
+    if (!consumed) {
+      extra.add(arg);
+    }
+  }
+  return extra;
+}
+
 /// Prints the CLI help text to stdout.
 void _printHelp() {
   // ignore: avoid_print
@@ -188,6 +213,8 @@ Usage:
 Core Commands:
   dev                     Run the Flutter app (default: example_app)
                             --app=<name>     App to run
+                            Extra flags are forwarded to flutter run
+                            e.g. ./bin/cli dev -d chrome --release
   build                   Build the Flutter app
                             --app=<name>     App to build
                             --target=<t>     Build target (apk, ios, web...)

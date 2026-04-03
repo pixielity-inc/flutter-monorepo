@@ -16,4 +16,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(dirname "$SCRIPT_DIR")"
 
+# Always run from the monorepo root so melos.yaml is found.
+cd "$ROOT"
+
 exec dart run "$ROOT/tool/cli.dart" "$@"

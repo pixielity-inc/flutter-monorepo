@@ -17,12 +17,17 @@ import '../utils/paths.dart';
 ///
 /// [appName] defaults to `example_app` when not provided.
 /// The app must exist under `apps/[appName]/`.
-Future<void> runDev({String appName = 'example_app'}) async {
+/// [extraArgs] are forwarded directly to `flutter run` (e.g. `-d chrome`).
+Future<void> runDev({
+  String appName = 'example_app',
+  List<String> extraArgs = const [],
+}) async {
   Logger.step('Starting $appName...');
 
   // Run flutter run from the app directory so that the correct
   // pubspec.yaml and assets are picked up.
   await ProcessRunner.run('flutter', [
     'run',
+    ...extraArgs,
   ], workingDirectory: WorkspacePaths.app(appName));
 }
