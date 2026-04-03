@@ -24,7 +24,7 @@ environment:
 
 dependencies:
   # freezed_annotation provides the @freezed macro used by the model.
-  freezed_annotation: ^2.4.1
+  freezed_annotation: ">=2.4.1 <4.0.0"
 
   # json_annotation provides @JsonSerializable used for JSON mapping.
   json_annotation: ^4.8.1
@@ -38,7 +38,7 @@ dev_dependencies:
     sdk: flutter
 
   # freezed generates immutable model boilerplate.
-  freezed: ^2.4.7
+  freezed: ">=2.4.7 <4.0.0"
 
   # json_serializable generates fromJson/toJson methods.
   json_serializable: ^6.7.1
