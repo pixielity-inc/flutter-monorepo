@@ -1,0 +1,60 @@
+{
+  "mcpServers": {
+    "dart-flutter": {
+      "command": "dart",
+      "args": ["mcp-server"],
+      "disabled": false,
+      "autoApprove": [
+        "dart_tool_call",
+        "flutter_tool_call",
+        "pub_get",
+        "pub_upgrade",
+        "pub_outdated",
+        "analyze",
+        "format",
+        "test",
+        "run"
+      ]
+    },
+    "heroui-native": {
+      "command": "npx",
+      "args": ["-y", "@heroui/native-mcp@latest"],
+      "disabled": false,
+      "autoApprove": [
+        "get_component",
+        "list_components",
+        "get_component_props",
+        "get_component_examples"
+      ]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "get_file_contents",
+        "list_commits",
+        "list_issues",
+        "get_issue",
+        "search_repositories",
+        "create_issue",
+        "create_pull_request"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"],
+      "disabled": false,
+      "autoApprove": [
+        "browser_navigate",
+        "browser_snapshot",
+        "browser_take_screenshot",
+        "browser_click",
+        "browser_type"
+      ]
+    }
+  }
+}

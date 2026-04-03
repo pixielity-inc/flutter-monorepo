@@ -1,0 +1,49 @@
+# .claude — flutter-monorepo
+#
+# Project-level instructions for Claude / AI assistants working in this repo.
+# These instructions are loaded automatically when Claude opens this workspace.
+
+## Project overview
+Flutter/Dart monorepo managed with Melos.
+- `apps/`      — Flutter applications
+- `packages/`  — Shared Dart/Flutter packages
+
+## Stack
+- Flutter 3.x (stable channel)
+- Dart 3.x
+- Melos 6.x for workspace orchestration
+- very_good_analysis for linting
+
+## Key commands
+```bash
+melos bootstrap          # install all dependencies
+melos run lint           # flutter analyze across all packages
+melos run format         # dart format across all packages
+melos run test           # flutter test across all packages
+melos run build          # build all packages
+melos run hooks:install  # register git hooks
+```
+
+## Code conventions
+- Always use `declare(strict_types=1)` — wait, this is Dart. Always use explicit types.
+- Follow `analysis_options.yaml` rules — `very_good_analysis` base.
+- All public APIs must have dartdoc comments (`///`).
+- Prefer `const` constructors wherever possible.
+- Use single quotes for strings.
+- Trailing commas on all multi-line structures.
+- Never use `print()` — use a proper logger.
+
+## File structure conventions
+- One class per file.
+- File names in `snake_case`.
+- Test files mirror source: `src/foo.dart` → `test/foo_test.dart`.
+
+## Git conventions
+- Conventional Commits: `feat(scope): description`
+- Never commit directly to `main` — always use a PR.
+- Tag format for package releases: `<package_name>-v<semver>`
+
+## What NOT to do
+- Do not modify `pubspec.lock` manually.
+- Do not add dependencies without checking `melos.yaml` first.
+- Do not skip `melos bootstrap` after pulling changes.
