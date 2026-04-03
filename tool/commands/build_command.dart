@@ -8,7 +8,7 @@
 ///
 /// Usage:
 ///   dart run tool/cli.dart build
-///   dart run tool/cli.dart build --app=example_app --target=apk
+///   ./bin/cli build --app=my_app --target=apk
 
 import '../core/logger.dart';
 import '../core/runner.dart';
@@ -16,10 +16,10 @@ import '../utils/paths.dart';
 
 /// Builds the Flutter app specified by [appName] for the given [target].
 ///
-/// [appName] defaults to `example_app`.
+/// [appName] auto-discovered from apps/.
 /// [target] defaults to `apk`. Other valid values: `ios`, `web`, `macos`, etc.
 Future<void> runBuild({
-  String appName = 'example_app',
+  required String appName,
   String target = 'apk',
 }) async {
   Logger.step('Building $appName ($target)...');

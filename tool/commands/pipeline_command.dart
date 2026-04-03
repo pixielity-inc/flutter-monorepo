@@ -50,7 +50,7 @@ Future<void> runPipelineCi() async {
 /// Step order:
 ///   1. `gen` — ensures generated files are up to date before running
 ///   2. `dev` — launches the app
-Future<void> runPipelineDev({String appName = 'example_app'}) async {
+Future<void> runPipelineDev({required String appName}) async {
   Logger.step('Pipeline: Dev');
   Logger.newline();
 
@@ -71,7 +71,7 @@ Future<void> runPipelineDev({String appName = 'example_app'}) async {
 ///
 /// This mirrors a typical CI/CD release gate.
 Future<void> runPipelineRelease({
-  String appName = 'example_app',
+  required String appName,
   String target = 'apk',
 }) async {
   Logger.step('Pipeline: Release');

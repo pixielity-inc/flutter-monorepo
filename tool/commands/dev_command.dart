@@ -7,7 +7,7 @@
 ///
 /// Usage:
 ///   dart run tool/cli.dart dev
-///   dart run tool/cli.dart dev --app=example_app
+///   ./bin/cli dev --app=my_app
 
 import '../core/logger.dart';
 import '../core/runner.dart';
@@ -15,11 +15,11 @@ import '../utils/paths.dart';
 
 /// Runs the Flutter app specified by [appName].
 ///
-/// [appName] defaults to `example_app` when not provided.
+/// [appName] auto-discovered from apps/ when not provided.
 /// The app must exist under `apps/[appName]/`.
 /// [extraArgs] are forwarded directly to `flutter run` (e.g. `-d chrome`).
 Future<void> runDev({
-  String appName = 'example_app',
+  required String appName,
   List<String> extraArgs = const [],
 }) async {
   Logger.step('Starting $appName...');

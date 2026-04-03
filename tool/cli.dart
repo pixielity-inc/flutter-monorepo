@@ -25,6 +25,18 @@ import 'commands/pipeline_command.dart';
 import 'commands/test_command.dart';
 import 'commands/version_command.dart';
 import 'core/logger.dart';
+import 'utils/paths.dart';
+
+/// Returns the default app name by auto-discovering the first app in apps/.
+/// Exits with an error if no apps are found.
+String _defaultApp() {
+  final app = WorkspacePaths.defaultApp;
+  if (app == null) {
+    Logger.error('No apps found in apps/. Create one first.');
+    exit(1);
+  }
+  return app;
+}
 
 /// CLI entry point.
 ///
@@ -51,13 +63,13 @@ Future<void> main(List<String> args) async {
       case 'dev':
         // Optional: --app=<name>
         // All other flags (e.g. -d chrome, --release) are forwarded to flutter run.
-        final appName = _flag(rest, 'app') ?? 'example_app';
+        final appName = _flag(rest, 'app') ?? _defaultApp();
         final extraArgs = _extraArgs(rest, {'app'});
         await runDev(appName: appName, extraArgs: extraArgs);
 
       case 'build':
         // Optional: --app=<name> --target=<apk|ios|web|...>
-        final appName = _flag(rest, 'app') ?? 'example_app';
+        final appName = _flag(rest, 'app') ?? _defaultApp();
         final target = _flag(rest, 'target') ?? 'apk';
         await runBuild(appName: appName, target: target);
 
@@ -113,11 +125,11 @@ Future<void> main(List<String> args) async {
         await runPipelineCi();
 
       case 'pipeline:dev':
-        final appName = _flag(rest, 'app') ?? 'example_app';
+        final appName = _flag(rest, 'app') ?? _defaultApp();
         await runPipelineDev(appName: appName);
 
       case 'pipeline:release':
-        final appName = _flag(rest, 'app') ?? 'example_app';
+        final appName = _flag(rest, 'app') ?? _defaultApp();
         final target = _flag(rest, 'target') ?? 'apk';
         await runPipelineRelease(appName: appName, target: target);
 
@@ -211,7 +223,7 @@ Usage:
   dart run tool/cli.dart <command> [options]
 
 Core Commands:
-  dev                     Run the Flutter app (default: example_app)
+  dev                     Run the Flutter app (default: first app in apps/)
                             --app=<name>     App to run
                             Extra flags are forwarded to flutter run
                             e.g. ./bin/cli dev -d chrome --release
@@ -252,6 +264,6 @@ Examples:
   dart run tool/cli.dart lint
   dart run tool/cli.dart feature auth
   dart run tool/cli.dart pipeline:ci
-  dart run tool/cli.dart build --app=example_app --target=apk
+  ./bin/cli build --app=my_app --target=apk
 ''');
 }

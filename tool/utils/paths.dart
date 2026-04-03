@@ -53,9 +53,27 @@ abstract final class WorkspacePaths {
   static String get tool => '$root/tool';
 
   /// Returns the absolute path to a named app under `apps/`.
-  ///
-  /// Example: `WorkspacePaths.app('example_app')` → `/path/to/repo/apps/example_app`
   static String app(String name) => '$apps/$name';
+
+  /// Returns the name of the first app found in `apps/`.
+  ///
+  /// Scans `apps/` for directories containing a `pubspec.yaml` and returns
+  /// the first one alphabetically. Returns `null` if no apps are found.
+  static String? get defaultApp {
+    final appsDir = Directory(apps);
+    if (!appsDir.existsSync()) return null;
+
+    final entries = appsDir.listSync().whereType<Directory>().toList()
+      ..sort((a, b) => a.path.compareTo(b.path));
+
+    for (final dir in entries) {
+      if (File('${dir.path}/pubspec.yaml').existsSync()) {
+        return dir.path.split('/').last;
+      }
+    }
+
+    return null;
+  }
 
   /// Returns the absolute path to a named package under `packages/`.
   ///
