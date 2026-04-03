@@ -1,10 +1,21 @@
-# Flutter Monorepo
+<div align="center">
+  <img src=".github/assets/banner.svg" alt="Flutter Monorepo" width="100%"/>
+</div>
 
-A production-ready Flutter monorepo template using **Melos** for package
-orchestration and a **Dart CLI** as the developer experience layer.
+<div align="center">
 
-[![CI](https://github.com/<org>/<repo>/actions/workflows/ci.yml/badge.svg)](https://github.com/<org>/<repo>/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/<org>/<repo>/branch/main/graph/badge.svg)](https://codecov.io/gh/<org>/<repo>)
+[![CI](https://github.com/pixielity-inc/flutter-monorepo/actions/workflows/ci.yml/badge.svg)](https://github.com/pixielity-inc/flutter-monorepo/actions/workflows/ci.yml)
+[![Flutter](https://img.shields.io/badge/Flutter-3.x-54C5F8?logo=flutter&logoColor=white)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.x-00BCD4?logo=dart&logoColor=white)](https://dart.dev)
+[![Melos](https://img.shields.io/badge/Melos-7.x-7C3AED)](https://melos.invertase.dev)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+**A production-ready Flutter monorepo template powered by [Melos](https://melos.invertase.dev).**
+Batteries included: Clean Architecture, Riverpod, Dart CLI, CI/CD, git hooks, and MCP.
+
+[Quick Start](#quick-start) · [Structure](#structure) · [CLI](#cli) · [Architecture](#architecture) · [CI/CD](#cicd) · [Contributing](CONTRIBUTING.md)
+
+</div>
 
 ---
 
@@ -13,158 +24,218 @@ orchestration and a **Dart CLI** as the developer experience layer.
 ```
 flutter-monorepo/
 ├── apps/
-│   └── example_app/          # Flutter app — composition root
+│   └── pixielity_example_app/     # Flutter application — composition root
+│       ├── lib/
+│       │   ├── app.dart            # App widget + routing
+│       │   ├── main.dart           # Entry point
+│       │   └── features/           # Feature modules (UI + providers)
+│       └── pubspec.yaml            # resolution: workspace
 ├── packages/
-│   └── example_package/      # Domain-layer package (entity, repo, use case)
-├── tool/                     # Dart CLI
-│   ├── cli.dart              # Entry point
-│   ├── commands/             # One file per command
-│   ├── core/                 # Process runner + logger
-│   └── utils/                # Path helpers
+│   └── pixielity_core/            # Domain-layer package (pure Dart)
+│       ├── lib/
+│       │   └── src/domain/         # Entities · Repositories · Use cases
+│       └── pubspec.yaml            # resolution: workspace
+├── tool/                           # Dart CLI
+│   ├── cli.dart                    # Entry point
+│   ├── commands/                   # One file per command
+│   ├── core/                       # Process runner + logger
+│   └── utils/                      # Path helpers
 ├── .github/
+│   ├── assets/banner.svg
 │   ├── workflows/
-│   │   ├── ci.yml            # Lint + test + coverage on every PR
-│   │   ├── cd_build.yml      # Build APK/IPA on main + tags
-│   │   └── cd_publish.yml    # Publish packages on version tags
-│   ├── dependabot.yml        # Automated dependency updates
-│   └── pull_request_template.md
-├── .githooks/
-│   └── pre-commit            # Local format + lint gate
-├── .vscode/                  # Shared editor settings + launch configs
-├── pubspec.yaml              # Workspace root + Melos config
-└── analysis_options.yaml     # Shared lint rules (very_good_analysis)
+│   │   ├── ci.yml                  # Format · analyze · test · coverage
+│   │   ├── cd_build.yml            # Build APK + iOS on main + tags
+│   │   └── cd_publish.yml          # Publish packages to pub.dev on tags
+│   ├── CODEOWNERS
+│   └── dependabot.yml
+├── .githooks/                      # pre-commit · commit-msg · pre-push
+├── .kiro/settings/mcp.json         # Dart SDK MCP · HeroUI Native · GitHub
+├── pubspec.yaml                    # Workspace root + Melos v7 config
+└── analysis_options.yaml           # very_good_analysis base ruleset
 ```
 
 ---
 
-## Prerequisites
+## Quick start
 
 ```bash
+# 1. Prerequisites
 dart --version    # >= 3.11
 flutter --version # >= 3.16
 dart pub global activate melos
-```
 
----
+# 2. Clone
+git clone https://github.com/pixielity-inc/flutter-monorepo.git
+cd flutter-monorepo
 
-## Setup
-
-```bash
-# Install root deps + bootstrap all packages
+# 3. Bootstrap all packages
 dart pub get && melos bootstrap
 
-# Install git hooks (format + lint on every commit)
+# 4. Install git hooks
 dart run tool/cli.dart hooks:install
+
+# 5. Run the example app
+dart run tool/cli.dart dev
 ```
 
 ---
 
 ## CLI
 
-All commands run from the repo root.
+All commands run from the repo root via `dart run tool/cli.dart <command>`.
+
+### Development
 
 ```bash
-# Development
-dart run tool/cli.dart dev               # Run example_app
-dart run tool/cli.dart dev --app=my_app  # Run a specific app
-
-# Quality
-dart run tool/cli.dart lint              # Analyze all packages (parallel)
-dart run tool/cli.dart format            # Format all files (parallel)
-dart run tool/cli.dart test              # Run all tests (parallel)
-dart run tool/cli.dart gen               # Code generation (sequential)
-dart run tool/cli.dart clean             # Clean build artifacts (parallel)
-
-# Build
-dart run tool/cli.dart build                          # APK
-dart run tool/cli.dart build --target=ios             # iOS
-dart run tool/cli.dart build --app=my_app --target=apk
-
-# Scaffolding
-dart run tool/cli.dart feature auth      # New feature package
-
-# Pipelines
-dart run tool/cli.dart pipeline:ci       # gen → lint + test (parallel)
-dart run tool/cli.dart pipeline:dev      # gen → dev
-dart run tool/cli.dart pipeline:release  # gen → lint → test → build
-
-# Versioning & publishing
-dart run tool/cli.dart version           # Preview version bumps
-dart run tool/cli.dart version --no-dry-run  # Bump + update CHANGELOGs
-dart run tool/cli.dart publish           # Dry-run publish
-dart run tool/cli.dart publish --no-dry-run  # Publish to pub.dev
-
-# Setup
-dart run tool/cli.dart hooks:install     # Install git pre-commit hook
-
-dart run tool/cli.dart help              # All commands
+dart run tool/cli.dart dev                    # Run pixielity_example_app
+dart run tool/cli.dart dev --app=my_app       # Run a specific app
 ```
 
----
+### Quality
 
-## CI / CD
+```bash
+dart run tool/cli.dart lint                   # flutter analyze (parallel)
+dart run tool/cli.dart format                 # dart format (parallel)
+dart run tool/cli.dart test                   # flutter test (parallel)
+dart run tool/cli.dart gen                    # build_runner (sequential)
+dart run tool/cli.dart fix                    # dart fix --apply (parallel)
+dart run tool/cli.dart clean                  # flutter clean (parallel)
+```
 
-| Workflow | Trigger | What it does |
-|---|---|---|
-| `ci.yml` | PR + push to `main` | Format check → lint → test → coverage |
-| `cd_build.yml` | Push to `main` + version tags | Build APK + iOS artifact |
-| `cd_publish.yml` | Tag `<package>-v*` | Publish package to pub.dev |
+### Build
 
-### Required secrets
+```bash
+dart run tool/cli.dart build                  # Android APK
+dart run tool/cli.dart build --target=ios     # iOS
+dart run tool/cli.dart build --target=web     # Web
+dart run tool/cli.dart build --app=my_app --target=apk
+```
 
-| Secret | Used by | How to get it |
-|---|---|---|
-| `CODECOV_TOKEN` | `ci.yml` | [codecov.io](https://codecov.io) → repo settings |
-| `PUB_CREDENTIALS` | `cd_publish.yml` | `cat ~/.pub-cache/credentials.json` after `dart pub login` |
+### Scaffolding
+
+```bash
+dart run tool/cli.dart feature auth           # Scaffold a new feature package
+```
+
+### Pipelines
+
+```bash
+dart run tool/cli.dart pipeline:ci            # gen → lint + test (parallel)
+dart run tool/cli.dart pipeline:dev           # gen → dev
+dart run tool/cli.dart pipeline:release       # gen → lint → test → build
+```
+
+### Versioning & publishing
+
+```bash
+dart run tool/cli.dart version                # Preview version bumps (dry-run)
+dart run tool/cli.dart version --no-dry-run   # Bump + update CHANGELOGs
+dart run tool/cli.dart publish                # Dry-run publish to pub.dev
+dart run tool/cli.dart publish --no-dry-run   # Publish to pub.dev
+```
+
+### Melos scripts (alternative)
+
+```bash
+melos run lint       # flutter analyze
+melos run format     # dart format
+melos run test       # flutter test
+melos run gen        # build_runner
+melos run clean      # flutter clean
+melos run upgrade    # flutter pub upgrade
+melos run upgrade:major  # flutter pub upgrade --major-versions
+melos run outdated   # flutter pub outdated
+melos run hooks:install  # register git hooks
+```
 
 ---
 
 ## Architecture
 
 ```
-Domain Layer   — pure Dart, no Flutter, no HTTP
-    ↑
-Data Layer     — repository implementations, DTOs
-    ↑
-Feature Layer  — UI + Riverpod state + domain wiring
-    ↑
-App Layer      — composition root, routing, DI
+┌─────────────────────────────────────────────────────┐
+│  App Layer (apps/pixielity_example_app)              │
+│  Composition root · Routing · DI · ProviderScope     │
+├─────────────────────────────────────────────────────┤
+│  Feature Layer (apps/*/lib/features/)                │
+│  UI widgets · Riverpod providers · Use case wiring   │
+├─────────────────────────────────────────────────────┤
+│  Domain Layer (packages/pixielity_core)              │
+│  Entities · Repository interfaces · Use cases        │
+│  Pure Dart — no Flutter, no HTTP, no state mgmt      │
+└─────────────────────────────────────────────────────┘
 ```
 
-Dependency rule: each layer may only depend on layers below it.
-The Domain Layer depends on nothing.
+**Dependency rule:** each layer may only depend on layers below it. The Domain Layer depends on nothing outside the Dart SDK.
 
 ---
 
-## Adding a new feature package
+## Adding a new package
 
 ```bash
-dart run tool/cli.dart feature booking
-# → scaffolds packages/features/booking/ with full clean architecture tree
+# 1. Create the package
+mkdir -p packages/pixielity_my_package/lib/src
+
+# 2. Add pubspec.yaml with:
+#    name: pixielity_my_package
+#    resolution: workspace
+
+# 3. Bootstrap
+dart pub get
 ```
 
 ## Adding a new app
 
-1. Create `apps/<name>/` as a standard Flutter app
-2. Add `resolution: workspace` to its `pubspec.yaml`
-3. Add `include: ../../analysis_options.yaml` to its `analysis_options.yaml`
-4. Run `dart pub get` at the root
+```bash
+flutter create apps/pixielity_my_app
+# Add `resolution: workspace` to pubspec.yaml
+# Add `include: ../../analysis_options.yaml` to analysis_options.yaml
+dart pub get
+```
 
 ## Publishing a package
 
 ```bash
-# Bump version + update CHANGELOG
 dart run tool/cli.dart version --no-dry-run
-
-# Publish
 dart run tool/cli.dart publish --no-dry-run
-
-# Or push a tag to trigger CI
-git tag example_package-v1.0.0 && git push --tags
+# Or push a tag to trigger CI:
+git tag pixielity_core-v1.0.0 && git push --tags
 ```
 
 ---
 
-## Contributing
+## CI/CD
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+| Workflow | Trigger | What it does |
+|---|---|---|
+| `ci.yml` | PR + push to `main` | Format check · analyze · test · Codecov upload |
+| `cd_build.yml` | Push to `main` + version tags | Build Android APK + iOS artifact |
+| `cd_publish.yml` | Tag `<package>-v*` | CI gate → publish to pub.dev → GitHub Release |
+
+### Required secrets
+
+| Secret | Workflow | Description |
+|---|---|---|
+| `CODECOV_TOKEN` | ci.yml | [codecov.io](https://codecov.io) token |
+| `PUB_CREDENTIALS` | cd_publish.yml | `cat ~/.pub-cache/credentials.json` after `dart pub login` |
+
+---
+
+## MCP servers (Kiro)
+
+Configured in `.kiro/settings/mcp.json`:
+
+| Server | Command | Purpose |
+|---|---|---|
+| `dart-flutter` | `dart mcp-server` | Official Dart SDK MCP — analyze, test, pub |
+| `heroui-native` | `@heroui/native-mcp` | HeroUI Native component docs |
+| `github` | `@modelcontextprotocol/server-github` | Repo operations |
+| `playwright` | `@playwright/mcp` | Browser testing |
+
+> The `dart mcp-server` command requires Dart SDK 3.9+ (Flutter 3.35+ beta).
+
+---
+
+## License
+
+MIT © [Pixielity](https://github.com/pixielity-inc)
