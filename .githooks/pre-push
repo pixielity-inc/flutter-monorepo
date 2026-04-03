@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# .githooks/pre-push — flutter-monorepo
+#
+# Runs before `git push` as a final local gate.
+# This is the right place for slower checks (tests) that are too expensive
+# to run on every commit but must pass before code reaches the remote.
+#
+# Checks (in order):
+#   1. flutter analyze — full workspace lint
+#   2. melos test      — full test suite across all packages
+#
+# Skip this hook for emergency pushes (use sparingly):
+#   git push --no-verify
+
+set -euo pipefail
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+step()  { echo -e "${YELLOW}▶ $*${NC}"; }
+ok()    { echo -e "${GREEN}✔ $*${NC}"; }
+fail()  { echo -e "${RED}✖ $*${NC}"; exit 1; }
+
+command -v flutter >/dev/null 2>&1 || fail "flutter not found. Is Flutter SDK on your PATH?"
+command -v melos   >/dev/null 2>&1 || fail "melos not found. Run: dart pub global activate melos"
+
+# ── 1. Full analyze ───────────────────────────────────────────────────────────
+step "Running flutter analyze (full workspace)..."
+flutter analyze --fatal-infos 2>&1 || fail "Analysis failed. Fix errors before pushing."
+ok "Analysis passed."
+
+# ── 2. Full test suite ────────────────────────────────────────────────────────
+step "Running tests across all packages..."
+melos exec --parallel --concurrency=4 -- flutter test 2>&1 || \
+  fail "Tests failed. Fix failing tests before pushing."
+ok "All tests passed."
+
+# ── Done ──────────────────────────────────────────────────────────────────────
+ok "Pre-push checks passed. Pushing..."

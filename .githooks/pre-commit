@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# .githooks/pre-commit — flutter-monorepo
+#
+# Runs before every commit as a fast local quality gate.
+#
+# Checks (in order):
+#   1. dart format  — fail if any staged Dart file is unformatted
+#   2. flutter analyze — fail on lint errors or type issues
+#
+# Tests are intentionally skipped here (too slow for a commit hook).
+# Run the full pipeline before pushing:
+#   dart run tool/cli.dart pipeline:ci
+#
+# Install:
+#   git config core.hooksPath .githooks
+# Or via the CLI:
+#   dart run tool/cli.dart hooks:install
+
+set -euo pipefail
+
+# ── Colours ──────────────────────────────────────────────────────────────────
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Colour
+
+# ── Helpers ───────────────────────────────────────────────────────────────────
+step()  { echo -e "${YELLOW}▶ $*${NC}"; }
+ok()    { echo -e "${GREEN}✔ $*${NC}"; }
+fail()  { echo -e "${RED}✖ $*${NC}"; exit 1; }
+
+# ── Guard: only run if dart/flutter are available ────────────────────────────
+command -v dart    >/dev/null 2>&1 || fail "dart not found. Is Flutter SDK on your PATH?"
+command -v flutter >/dev/null 2>&1 || fail "flutter not found. Is Flutter SDK on your PATH?"
+
+# ── 1. Collect staged Dart files ─────────────────────────────────────────────
+STAGED_DART=$(git diff --cached --name-only --diff-filter=ACMR | grep '\.dart$' || true)
+
+if [ -z "$STAGED_DART" ]; then
+  ok "No staged Dart files — skipping format and analyze."
+  exit 0
+fi
+
+# ── 2. Format check ───────────────────────────────────────────────────────────
+step "Checking Dart formatting..."
+
+# Run dart format on each staged file individually so we only check what's
+# actually being committed, not the entire workspace.
+FORMAT_FAILED=0
+while IFS= read -r file; do
+  if [ -f "$file" ]; then
+    dart format --set-exit-if-changed "$file" 2>/dev/null || FORMAT_FAILED=1
+  fi
+done <<< "$STAGED_DART"
+
+if [ "$FORMAT_FAILED" -ne 0 ]; then
+  fail "Formatting issues found. Run: dart run tool/cli.dart format\nThen re-stage the files."
+fi
+
+ok "Format check passed."
+
+# ── 3. Analyze ────────────────────────────────────────────────────────────────
+step "Running flutter analyze..."
+
+flutter analyze --fatal-infos 2>&1 || fail "Analysis failed. Run: dart run tool/cli.dart lint"
+
+ok "Analysis passed."
+
+# ── Done ──────────────────────────────────────────────────────────────────────
+ok "Pre-commit checks passed."
