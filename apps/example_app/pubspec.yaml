@@ -1,0 +1,44 @@
+# apps/example_app/pubspec.yaml
+#
+# Example App — the composition root of the Flutter monorepo.
+#
+# This app wires together packages from the monorepo and demonstrates
+# the full stack: domain entity → use case → Riverpod provider → UI.
+#
+# It is intentionally minimal — one screen, one provider, one package dep.
+# Use it as the template when adding new apps to the monorepo.
+
+name: example_app
+description: >
+  Example Flutter application demonstrating monorepo package consumption,
+  Riverpod state management, and clean architecture wiring.
+version: 1.0.0+1
+publish_to: none
+
+# Tells the Dart SDK this package is part of the root workspace.
+resolution: workspace
+
+environment:
+  sdk: ">=3.11.0 <4.0.0"
+  flutter: ">=3.16.0"
+
+dependencies:
+  # example_package — domain entities, repository interface, use case.
+  example_package:
+    path: ../../packages/example_package
+
+  flutter:
+    sdk: flutter
+
+  # flutter_riverpod provides the ProviderScope and consumer widgets.
+  flutter_riverpod: ^2.4.10
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # very_good_analysis enforces strict lint rules.
+  very_good_analysis: ^6.0.0
+
+flutter:
+  uses-material-design: true

@@ -1,0 +1,33 @@
+# build.yaml
+#
+# build_runner configuration for example_package.
+#
+# Controls how freezed and json_serializable generate code.
+# This file is read by `dart run build_runner build`.
+#
+# Docs: https://pub.dev/packages/build_config
+
+targets:
+  $default:
+    builders:
+      # ---------------------------------------------------------------------------
+      # freezed — generates immutable model boilerplate
+      # ---------------------------------------------------------------------------
+      freezed:
+        # Only run freezed on files that use the @freezed annotation.
+        generate_for:
+          include:
+            - lib/src/domain/entities/**.dart
+
+      # ---------------------------------------------------------------------------
+      # json_serializable — generates fromJson / toJson
+      # ---------------------------------------------------------------------------
+      json_serializable:
+        options:
+          # Use explicit_to_json so nested objects serialize correctly.
+          explicit_to_json: true
+          # Include fields with default values in toJson output.
+          include_if_null: false
+        generate_for:
+          include:
+            - lib/src/domain/entities/**.dart
