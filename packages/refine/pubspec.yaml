@@ -1,0 +1,28 @@
+name: pixielity_refine
+description: >
+  Refine-like framework for Flutter.
+  GetIt (via pixielity_container) handles DI. Riverpod handles reactive
+  state — the Flutter equivalent of React Query + hooks.
+  Provides: Repository, Service, Controller base classes, a Resource
+  registry, a Form Builder DSL, and auto CRUD page widgets.
+version: 0.1.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ">=3.11.0 <4.0.0"
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.5.1
+  forui: ^0.20.4
+  container:
+    path: ../container
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^6.0.0
