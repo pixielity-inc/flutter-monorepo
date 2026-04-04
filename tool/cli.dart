@@ -1,3 +1,4 @@
+// ignore_for_file: lines_longer_than_80_chars
 /// cli.dart
 ///
 /// Entry point for the Flutter Monorepo Dart CLI.
@@ -62,11 +63,12 @@ Future<void> main(List<String> args) async {
       // -----------------------------------------------------------------------
 
       case 'dev':
-        // Optional: --app=<name>
+        // Optional: --app=<name> --env=<development|staging|production>
         // All other flags (e.g. -d chrome, --release) are forwarded to flutter run.
         final appName = _flag(rest, 'app') ?? _defaultApp();
-        final extraArgs = _extraArgs(rest, {'app'});
-        await runDev(appName: appName, extraArgs: extraArgs);
+        final env     = _flag(rest, 'env') ?? 'development';
+        final extraArgs = _extraArgs(rest, {'app', 'env'});
+        await runDev(appName: appName, env: env, extraArgs: extraArgs);
 
       case 'build':
         // Optional: --app=<name> --target=<apk|ios|web|...>
@@ -149,9 +151,9 @@ Future<void> main(List<String> args) async {
         _printHelp();
         exit(1);
     }
-  } on ArgumentError catch (e) {
+  } on Exception catch (e) {
     // Validation errors from commands (e.g. invalid feature name).
-    Logger.error(e.message.toString());
+    Logger.error(e.toString());
     exit(1);
   } catch (e) {
     // Unexpected errors — print and exit with failure code.
@@ -225,9 +227,15 @@ Usage:
 
 Core Commands:
   dev                     Run the Flutter app (default: first app in apps/)
-                            --app=<name>     App to run
+                            --app=<name>     App to run (default: first in apps/)
+                            --env=<env>      Environment to use: dev (default),
+                                             stg, prod (or full names)
+                                             Loads environments/.dart-define.<env>
+                            ⚠  dart-define values are compile-time constants.
+                               Hot reload/restart will NOT pick up env changes.
+                               Stop (Ctrl+C) and re-run to switch environments.
                             Extra flags are forwarded to flutter run
-                            e.g. ./bin/cli dev -d chrome --release
+                            e.g. ./bin/cli dev --env=stg -d chrome
   build                   Build the Flutter app
                             --app=<name>     App to build
                             --target=<t>     Build target (apk, ios, web...)

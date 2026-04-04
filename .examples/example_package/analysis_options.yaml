@@ -1,0 +1,6 @@
+# analysis_options.yaml (pixielity_core)
+#
+# Inherits all rules from the root analysis_options.yaml.
+# Add package-specific overrides below if needed.
+
+include: ../../analysis_options.yaml
