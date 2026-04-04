@@ -1,6 +1,0 @@
-# analysis_options.yaml (pixielity_ui)
-#
-# Inherits all strict lint rules from the root analysis_options.yaml.
-# Add package-specific overrides below only when absolutely necessary.
-
-include: ../../analysis_options.yaml
