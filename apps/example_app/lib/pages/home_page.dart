@@ -14,6 +14,7 @@ import 'package:pixielity_example_app/pages/auth_explorer_page.dart';
 import 'package:pixielity_example_app/pages/config_explorer_page.dart';
 import 'package:pixielity_example_app/pages/container_explorer_page.dart';
 import 'package:pixielity_example_app/pages/feature_flags_explorer_page.dart';
+import 'package:pixielity_example_app/pages/refine/refine_explorer_page.dart';
 import 'package:pixielity_example_app/pages/storage_explorer_page.dart';
 import 'package:pixielity_example_app/pages/theme_explorer_page.dart';
 
@@ -135,6 +136,15 @@ class HomePage extends StatelessWidget {
                 title: 'Analytics',
                 subtitle: 'Multi-provider analytics with PII scrubbing, sampling, and test events.',
                 onTap: () => _push(context, const AnalyticsExplorerPage()),
+              ),
+              const SizedBox(height: 12),
+
+              // Refine — schema-driven UI builders
+              _FeatureCard(
+                icon: LucideIcons.layoutTemplate,
+                title: 'Refine Builders',
+                subtitle: 'FormBuilder, TableBuilder, FilterBuilder, ChartBuilder, DashboardBuilder, NavigationBuilder.',
+                onTap: () => _push(context, const RefineExplorerPage()),
               ),
               const SizedBox(height: 32),
             ],
