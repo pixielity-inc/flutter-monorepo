@@ -29,25 +29,32 @@ dependencies:
   # flutter_riverpod provides the ProviderScope and consumer widgets.
   flutter_riverpod: ^2.4.10
   forui: ^0.20.4
+  pixielity_refine:
+    path: ../../packages/refine
 
   # lucide_icons_flutter — full Lucide icon set (same icons as Forui, more coverage).
   lucide_icons_flutter: ^3.1.12
 
   # pixielity_config — centralised configuration system.
-  pixielity_config:
-    path: ../../packages/pixielity_config
+  config:
+    path: ../../packages/config
 
   # pixielity_container — Laravel-style IoC container.
-  pixielity_container:
-    path: ../../packages/pixielity_container
+  container:
+    path: ../../packages/container
 
-  # pixielity_core — domain entities, repository interface, use case.
+  # core — domain entities, repository interface, use case.
   pixielity_core:
-    path: ../../packages/example_package
+    path: ../../packages/support
+
+  # pixielity_logger — structured logger.
+  logger:
+    path: ../../packages/logger
 
   # pixielity_ui — centralised theming system and component library.
-  pixielity_ui:
-    path: ../../packages/pixielity_ui
+  ui:
+    path: ../../packages/ui
+  shared_preferences: ^2.5.5
 
 dev_dependencies:
   flutter_test:
