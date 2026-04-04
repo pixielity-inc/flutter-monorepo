@@ -1,0 +1,44 @@
+# packages/pixielity_ui/pubspec.yaml
+#
+# pixielity_ui — the centralised theming and component library for the
+# Pixielity Flutter monorepo.
+#
+# This package owns every design decision:
+#   - Design tokens  (colors, spacing, radii, typography, shadows, durations)
+#   - AppTheme       (light + dark MaterialTheme + custom ThemeExtension)
+#   - Widgets        (opinionated, pre-styled components built on top of Flutter)
+#   - Utilities      (responsive helpers, BuildContext extensions)
+#
+# All apps in the monorepo should depend on this package instead of
+# hard-coding colours or text styles directly.
+
+name: ui
+description: >
+  Centralised theming system and component library for the Pixielity Flutter
+  monorepo. Provides design tokens, light/dark themes, and reusable widgets.
+version: 0.1.0
+publish_to: none
+
+# Tells the Dart SDK this package is part of the root workspace.
+resolution: workspace
+
+environment:
+  sdk: ">=3.11.0 <4.0.0"
+  flutter: ">=3.41.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # forui is the base UI library; we wrap / extend its theming.
+  forui: ^0.20.4
+
+  # google_fonts gives us access to the full Google Fonts catalogue.
+  google_fonts: ^6.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # very_good_analysis enforces strict lint rules across the monorepo.
+  very_good_analysis: ^6.0.0

@@ -1,0 +1,32 @@
+# packages/pixielity_config/pubspec.yaml
+#
+# pixielity_config — centralised, type-safe configuration system for the
+# Pixielity Flutter monorepo.
+#
+# This is a pure-Dart package (no Flutter SDK dependency) so it can be
+# consumed by apps, packages, and CLI tools alike.
+#
+# Every config object is immutable and constructed with named parameters
+# that have production-safe defaults. Apps override only what they need.
+
+name: config
+description: >
+  Centralised, type-safe configuration system for the Pixielity Flutter
+  monorepo. Covers app metadata, theming, HTTP/API, auth, storage,
+  analytics, logging, and feature flags.
+version: 0.1.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ">=3.11.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^6.0.0

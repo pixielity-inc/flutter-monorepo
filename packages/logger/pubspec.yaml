@@ -1,0 +1,30 @@
+name: logger
+description: >
+  Structured, multi-transport logger for the Pixielity Flutter monorepo.
+  Reads configuration from pixielity_config and supports console, file,
+  and remote transports with PII redaction and log level filtering.
+version: 0.1.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ">=3.11.0 <4.0.0"
+  flutter: ">=3.41.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Config registry — reads logging.* keys.
+  config:
+    path: ../config
+  # Container — for LoggerServiceProvider.
+  container:
+    path: ../container
+  # HTTP client for RemoteTransport.
+  http: ^1.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^6.0.0
