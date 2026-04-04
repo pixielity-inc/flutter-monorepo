@@ -2,8 +2,8 @@
 //
 // ApiServiceProvider — registers all HTTP / API layer bindings.
 
-import 'package:pixielity_config/pixielity_config.dart';
-import 'package:pixielity_container/pixielity_container.dart';
+import 'package:config/pixielity_config.dart';
+import 'package:container/pixielity_container.dart';
 
 /// Registers HTTP client and API-related services.
 ///

@@ -9,8 +9,8 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pixielity_config/pixielity_config.dart';
-import 'package:pixielity_container/pixielity_container.dart';
+import 'package:config/pixielity_config.dart';
+import 'package:container/pixielity_container.dart';
 import 'package:pixielity_example_app/app.dart';
 import 'package:pixielity_example_app/config/analytics.dart';
 import 'package:pixielity_example_app/config/api.dart';
@@ -23,8 +23,10 @@ import 'package:pixielity_example_app/config/theme.dart';
 import 'package:pixielity_example_app/providers/api_service_provider.dart';
 import 'package:pixielity_example_app/providers/core_service_provider.dart';
 import 'package:pixielity_example_app/providers/theme_config_bridge.dart';
-import 'package:pixielity_ui/pixielity_ui.dart';
-
+import 'package:pixielity_example_app/providers/theme_providers.dart';
+import 'package:pixielity_example_app/providers/theme_service_provider.dart';
+import 'package:logger/pixielity_logger.dart';
+import 'package:ui/pixielity_ui.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -45,15 +47,30 @@ void main() async {
   ConfigBridge.register(ThemeConfigBridge());
 
   // 4. Boot the container — register() then boot() on every provider.
+  //    UiServiceProvider must be first — it registers ThemeRegistry,
+  //    ThemeService, and ThemeModeService before anything else runs.
   await Application.boot([
+    UiServiceProvider(),
+    LoggerServiceProvider(),    // ← registers Logger + console/remote transports
+    ThemeServiceProvider(),
     CoreServiceProvider(),
     ApiServiceProvider(),
   ]);
 
-  // 5. Start the app.
+  // 5. Load persisted theme preferences and seed providers.
+  final themeOverrides = await loadThemeOverrides();
+
+  // 6. Start the app — wrap with UiScope so all widgets can access
+  //    ThemeRegistry, ThemeService, and ThemeModeService via context.
   runApp(
-    const ProviderScope(
-      child: AppWidget(),
+    ProviderScope(
+      overrides: themeOverrides,
+      child: UiScope(
+        registry: App.make<ThemeRegistry>(),
+        themeService: App.make<ThemeService>(),
+        themeModeService: App.make<ThemeModeService>(),
+        child: const AppWidget(),
+      ),
     ),
   );
 }

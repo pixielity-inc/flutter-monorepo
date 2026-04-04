@@ -11,7 +11,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:pixielity_container/pixielity_container.dart' as ioc;
+import 'package:container/pixielity_container.dart' as ioc;
 import 'package:pixielity_example_app/pages/shared/explorer_scaffold.dart';
 
 // ── Demo services registered for this page ────────────────────────────────────
@@ -176,8 +176,7 @@ class _ContainerExplorerPageState extends State<ContainerExplorerPage> {
   /// Because it is a singleton, the same instance is returned each time —
   /// the counter value persists across multiple make() calls.
   void _makeSingleton() {
-    final service = ioc.App.make<CounterService>();
-    service.increment();
+    final service = ioc.App.make<CounterService>()..increment();
     setState(() {
       _singletonCounter = service;
       _log.add(_LogEntry(
@@ -287,21 +286,18 @@ class _ContainerExplorerPageState extends State<ContainerExplorerPage> {
                 ),
               ],
               const SizedBox(height: 12),
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(
-                    child: FButton(
-                      onPress: _singletonRegistered ? _makeSingleton : null,
-                      child: const Text('make() + increment'),
-                    ),
+                  FButton(
+                    onPress: _singletonRegistered ? _makeSingleton : null,
+                    child: const Text('make() → increment counter'),
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: FButton(
-                      variant: FButtonVariant.outline,
-                      onPress: _forgetAndReset,
-                      child: const Text('forget() + reset'),
-                    ),
+                  const SizedBox(height: 8),
+                  FButton(
+                    variant: FButtonVariant.outline,
+                    onPress: _forgetAndReset,
+                    child: const Text('forget() → reset singleton'),
                   ),
                 ],
               ),
@@ -324,21 +320,18 @@ class _ContainerExplorerPageState extends State<ContainerExplorerPage> {
                 value: 'New instance on every make()',
               ),
               const SizedBox(height: 12),
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(
-                    child: FButton(
-                      onPress: _transientRegistered ? _makeTransient : null,
-                      child: const Text('make() — new instance'),
-                    ),
+                  FButton(
+                    onPress: _transientRegistered ? _makeTransient : null,
+                    child: const Text('make() → new instance'),
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: FButton(
-                      variant: FButtonVariant.outline,
-                      onPress: _checkBound,
-                      child: const Text('bound() check'),
-                    ),
+                  const SizedBox(height: 8),
+                  FButton(
+                    variant: FButtonVariant.outline,
+                    onPress: _checkBound,
+                    child: const Text('bound() check'),
                   ),
                 ],
               ),

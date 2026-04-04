@@ -4,8 +4,8 @@
 // pixielity_ui's AppTheme.fromConfig() without creating a hard dependency
 // between the two packages.
 
-import 'package:pixielity_config/pixielity_config.dart';
-import 'package:pixielity_ui/pixielity_ui.dart';
+import 'package:config/pixielity_config.dart';
+import 'package:ui/pixielity_ui.dart';
 
 /// Implements [ConfigBridge] by delegating to the [Config] registry.
 ///

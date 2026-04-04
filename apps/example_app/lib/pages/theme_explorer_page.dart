@@ -7,11 +7,13 @@
 // to let the user preview every visual token at runtime.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:forui/forui.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:pixielity_config/pixielity_config.dart';
+import 'package:config/pixielity_config.dart';
 import 'package:pixielity_example_app/pages/shared/explorer_scaffold.dart';
-import 'package:pixielity_ui/pixielity_ui.dart';
+import 'package:pixielity_example_app/providers/theme_providers.dart';
+import 'package:ui/pixielity_ui.dart';
 
 /// Theme Explorer — live theme switcher and token inspector.
 ///
@@ -19,49 +21,25 @@ import 'package:pixielity_ui/pixielity_ui.dart';
 /// [AppAnimationScaleSelector] widgets from pixielity_ui. Also shows the
 /// full typography scale, color palette, status colors, border radius
 /// tokens, and spacing tokens from the active theme.
-class ThemeExplorerPage extends StatefulWidget {
+class ThemeExplorerPage extends ConsumerStatefulWidget {
   /// Creates the [ThemeExplorerPage].
   const ThemeExplorerPage({super.key});
 
   @override
-  State<ThemeExplorerPage> createState() => _ThemeExplorerPageState();
+  ConsumerState<ThemeExplorerPage> createState() => _ThemeExplorerPageState();
 }
 
-class _ThemeExplorerPageState extends State<ThemeExplorerPage> {
-  // ── State ──────────────────────────────────────────────────────────────────
-
-  /// The currently selected base palette name.
-  late String _palette;
-
-  /// The currently selected brightness mode.
-  late AppBrightnessMode _brightness;
-
-  /// The current font size scalar.
-  late double _fontScale;
-
-  /// The current animation speed multiplier.
-  late double _animScale;
-
-  @override
-  void initState() {
-    super.initState();
-    // Seed from Config so the explorer starts with the configured values.
-    _palette    = Config.get<String>('theme.base',            fallback: 'violet');
-    _fontScale  = Config.get<double>('theme.typography.sizeScalar', fallback: 1);
-    _animScale  = Config.get<double>('theme.animation.scale', fallback: 1);
-
-    final brightnessStr = Config.get<String>('theme.brightness', fallback: 'system');
-    _brightness = switch (brightnessStr) {
-      'light' => AppBrightnessMode.light,
-      'dark'  => AppBrightnessMode.dark,
-      _       => AppBrightnessMode.system,
-    };
-  }
-
-  // ── Build ──────────────────────────────────────────────────────────────────
+class _ThemeExplorerPageState extends ConsumerState<ThemeExplorerPage> {
+  // All theme state is now in Riverpod providers — no local state needed.
 
   @override
   Widget build(BuildContext context) {
+    // Watch all providers — changes rebuild FTheme at the root immediately.
+    final palette    = ref.watch(themePaletteProvider);
+    final brightness = ref.watch(themeBrightnessProvider);
+    final fontScale  = ref.watch(themeFontScaleProvider);
+    final animScale  = ref.watch(themeAnimationScaleProvider);
+    final grayBase   = ref.watch(themeBaseValueProvider);
     final theme = FTheme.of(context);
     final ext   = context.appTheme;
 
@@ -95,16 +73,18 @@ class _ThemeExplorerPageState extends State<ThemeExplorerPage> {
               const SizedBox(height: 4),
               // AppThemeModeSelector from pixielity_ui — palette + brightness.
               AppThemeModeSelector(
-                palette: _palette,
-                brightness: _brightness,
-                onPaletteChanged: (p) => setState(() => _palette = p),
-                onBrightnessChanged: (b) => setState(() => _brightness = b),
+                palette: palette,
+                brightness: brightness,
+                onPaletteChanged: (p) =>
+                    ref.read(themePaletteProvider.notifier).update(p),
+                onBrightnessChanged: (b) =>
+                    ref.read(themeBrightnessProvider.notifier).update(b),
                 showPaletteLabels: true,
               ),
               const SizedBox(height: 8),
               Text(
-                'Selected: $_palette · ${_brightness.name} — '
-                'changes take effect on next app restart.',
+                'Selected: $palette · ${brightness.name} — '
+                'changes apply immediately to the whole app.',
                 style: theme.typography.xs.copyWith(color: theme.colors.mutedForeground),
               ),
             ],
@@ -117,10 +97,27 @@ class _ThemeExplorerPageState extends State<ThemeExplorerPage> {
             title: 'Font Scale Selector',
             children: [
               const SizedBox(height: 4),
-              // AppFontScaleSelector from pixielity_ui.
               AppFontScaleSelector(
-                value: _fontScale,
-                onChanged: (s) => setState(() => _fontScale = s),
+                value: fontScale,
+                onChanged: (s) =>
+                    ref.read(themeFontScaleProvider.notifier).update(s,)
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+
+          // ── Base Selector (pixielity_ui widget) ───────────────────────────
+          SectionCard(
+            icon: LucideIcons.droplets,
+            title: 'Base (Gray Saturation)',
+            children: [
+              const SizedBox(height: 4),
+              // AppBaseSelector from pixielity_ui — controls how much gray
+              // is mixed into neutral surfaces like backgrounds and cards.
+              AppBaseSelector(
+                value: grayBase,
+                onChanged: (v) =>
+                    ref.read(themeBaseValueProvider.notifier).update(v,)
               ),
             ],
           ),
@@ -134,8 +131,9 @@ class _ThemeExplorerPageState extends State<ThemeExplorerPage> {
               const SizedBox(height: 4),
               // AppAnimationScaleSelector from pixielity_ui.
               AppAnimationScaleSelector(
-                value: _animScale,
-                onChanged: (s) => setState(() => _animScale = s),
+                value: animScale,
+                onChanged: (s) =>
+                    ref.read(themeAnimationScaleProvider.notifier).update(s,)
               ),
             ],
           ),
@@ -247,8 +245,15 @@ class _TypographyRow extends StatelessWidget {
             child: Text(label, style: theme.typography.xs.copyWith(color: theme.colors.mutedForeground, fontFamily: 'monospace')),
           ),
           const SizedBox(width: 8),
-          Text('The quick brown fox', style: style.copyWith(color: theme.colors.foreground)),
-          const Spacer(),
+          Expanded(
+            child: Text(
+              'The quick brown fox',
+              style: style.copyWith(color: theme.colors.foreground),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+          ),
+          const SizedBox(width: 8),
           Text('${style.fontSize?.toStringAsFixed(0) ?? '?'}px', style: theme.typography.xs.copyWith(color: theme.colors.mutedForeground)),
         ],
       ),
@@ -283,7 +288,7 @@ class _ColorRow extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(child: Text(label, style: theme.typography.xs.copyWith(color: theme.colors.foreground))),
           Text(
-            '#${color.value.toRadixString(16).toUpperCase().padLeft(8, '0')}',
+            '#${color.toARGB32().toRadixString(16).toUpperCase().padLeft(8, '0')}',
             style: theme.typography.xs.copyWith(color: theme.colors.mutedForeground, fontFamily: 'monospace'),
           ),
         ],

@@ -9,7 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:pixielity_config/pixielity_config.dart';
+import 'package:config/pixielity_config.dart';
 import 'package:pixielity_example_app/pages/shared/explorer_scaffold.dart';
 
 /// Storage Explorer — displays the full local storage configuration.

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:forui/forui.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:pixielity_config/pixielity_config.dart';
+import 'package:config/pixielity_config.dart';
+import 'package:ui/pixielity_ui.dart';
 
 /// Config Explorer — displays every loaded config section and its key/value
 /// pairs. Useful for verifying dart-define values at runtime in development.
@@ -53,18 +54,9 @@ class _ConfigExplorerPageState extends State<ConfigExplorerPage> {
           // ── Search bar ───────────────────────────────────────────────────
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-            child: FTextField(
-              control: FTextFieldControl.managed(controller: _controller),
+            child: AppSearchBar(
               hint: 'Search keys...',
-              prefixBuilder: (context, _, __) => Padding(
-                padding: const EdgeInsets.only(right: 4),
-                child: Icon(
-                  LucideIcons.search,
-                  size: 16,
-                  color: FTheme.of(context).colors.mutedForeground,
-                ),
-              ),
-              onSubmit: (_) {},
+              controller: _controller,
             ),
           ),
 

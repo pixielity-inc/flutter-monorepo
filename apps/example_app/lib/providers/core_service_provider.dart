@@ -3,7 +3,7 @@
 // CoreServiceProvider — registers foundational app-level bindings.
 // This is always the first provider booted.
 
-import 'package:pixielity_container/pixielity_container.dart';
+import 'package:container/pixielity_container.dart';
 
 /// Registers core app-level services that everything else depends on.
 ///

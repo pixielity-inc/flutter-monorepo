@@ -12,6 +12,24 @@ Map<String, dynamic> themeConfig() {
 
     /*
     |--------------------------------------------------------------------------
+    | Gray Saturation (Base)
+    |--------------------------------------------------------------------------
+    |
+    | Controls how much gray is mixed into neutral surfaces like backgrounds,
+    | cards, borders, and muted colors. This is the "warmth" or "coolness"
+    | of the neutral palette.
+    |
+    | 0.0 = pure gray (no color tint) — cold, minimal.
+    | 1.0 = fully saturated neutrals — warm, colorful.
+    |
+    | Most apps use 0.0–0.2 for a clean look.
+    |
+    */
+
+    'grayBase': 0.0,
+
+    /*
+    |--------------------------------------------------------------------------
     | Base Color Palette
     |--------------------------------------------------------------------------
     |
