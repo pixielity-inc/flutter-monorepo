@@ -36,7 +36,7 @@ jobs:
       # 1. Checkout
       # -----------------------------------------------------------------------
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # -----------------------------------------------------------------------
       # 2. Flutter SDK
@@ -54,7 +54,7 @@ jobs:
       # 3. Dart pub cache
       # -----------------------------------------------------------------------
       - name: Cache pub dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ~/.pub-cache
@@ -97,7 +97,7 @@ jobs:
       # 9. Upload coverage to Codecov
       # -----------------------------------------------------------------------
       - name: Upload coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v6
         with:
           # Set CODECOV_TOKEN in your repository secrets.
           token: ${{ secrets.CODECOV_TOKEN }}
