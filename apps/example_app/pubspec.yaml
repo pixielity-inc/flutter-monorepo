@@ -28,7 +28,7 @@ dependencies:
 
   # flutter_riverpod provides the ProviderScope and consumer widgets.
   flutter_riverpod: ^2.4.10
-  forui: ^0.20.4
+  forui: ">=0.20.4 <0.22.0"
   pixielity_refine:
     path: ../../packages/refine
 

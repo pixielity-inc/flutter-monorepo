@@ -31,7 +31,7 @@ dependencies:
     sdk: flutter
 
   # forui is the base UI library; we wrap / extend its theming.
-  forui: ^0.20.4
+  forui: ">=0.20.4 <0.22.0"
 
   # google_fonts gives us access to the full Google Fonts catalogue.
   google_fonts: ^6.2.1
